@@ -1,6 +1,7 @@
 import './App.css'
 import AboutSection from './AboutSection'
 import PortfolioSection from './PortfolioSection'
+import ServicesSection from './ServicesSection'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       </main>
       <AboutSection />
       <PortfolioSection />
+      <ServicesSection />
     </div>
   )
 }
