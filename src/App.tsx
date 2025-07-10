@@ -2,6 +2,7 @@ import './App.css'
 import AboutSection from './AboutSection'
 import PortfolioSection from './PortfolioSection'
 import ServicesSection from './ServicesSection'
+import ContactSection from './ContactSection'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <AboutSection />
       <PortfolioSection />
       <ServicesSection />
+      <ContactSection />
     </div>
   )
 }
