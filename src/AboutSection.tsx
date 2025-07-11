@@ -5,6 +5,7 @@ const AboutSection: React.FC = () => {
     <section className="about-section" id="about">
       <h2 className="about-title">About Me</h2>
       <div className="about-content">
+        {/* Replace with: <img src="..." alt="Your professional photo" className="about-photo" /> */}
         <div className="about-bio">
           <p>[Your professional biography goes here. Briefly introduce yourself, your background, and your passion for AI engineering.]</p>
         </div>
