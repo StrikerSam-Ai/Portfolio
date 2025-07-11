@@ -1,13 +1,17 @@
 import './App.css'
+import NavBar from './NavBar'
 import AboutSection from './AboutSection'
 import PortfolioSection from './PortfolioSection'
 import ServicesSection from './ServicesSection'
 import ContactSection from './ContactSection'
+import ScrollToTopButton from './ScrollToTopButton'
+import Footer from './Footer'
 
 function App() {
   return (
     <div className="main-content">
-      <main className="hero-section">
+      <NavBar />
+      <main className="hero-section" id="hero">
         {/* Placeholder for your professional photo or avatar */}
         <div className="hero-photo">[Your Photo]</div>
         <h1 className="hero-name">Shashwat Mishra</h1>
@@ -23,6 +27,8 @@ function App() {
       <PortfolioSection />
       <ServicesSection />
       <ContactSection />
+      <ScrollToTopButton />
+      <Footer />
     </div>
   )
 }
