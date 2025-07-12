@@ -10,7 +10,7 @@ const ContactSection: React.FC = () => {
           <input type="text" placeholder="Your Name" className="contact-input" aria-label="Your Name" />
           <input type="email" placeholder="Your Email" className="contact-input" aria-label="Your Email" />
           <textarea placeholder="Your Message" className="contact-input" rows={5} aria-label="Your Message"></textarea>
-          <button type="submit" className="contact-submit">Send</button>
+          <button type="submit" className="contact-submit btn-grad">Send</button>
         </form>
         <div className="contact-info contact-card">
           <h3>Or reach me at</h3>
