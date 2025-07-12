@@ -592,6 +592,8 @@ html, body, #root {
   color: #A0A0A0;
 }
 
+
+
 .hero-cta, .contact-submit, .scroll-to-top {
   background: var(--color-primary);
   color: var(--color-heading);
