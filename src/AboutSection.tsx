@@ -39,72 +39,197 @@ const AboutSection: React.FC = () => {
   const [editValues, setEditValues] = useState<number[]>(skills.map((s: Skill) => s.value));
   const [editLabels, setEditLabels] = useState<string[]>(skills.map((s: Skill) => s.label));
   const chartRef = useRef<any>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     localStorage.setItem('skills', JSON.stringify(skills));
   }, [skills]);
 
-  // Draw a static blue polygon at half the chart's radius for debug
+  // Heartbeat wave animation effect
   useEffect(() => {
-    // Find the radar chart's bounding rect for absolute positioning
-    const chart = chartRef.current && chartRef.current.chartInstance ? chartRef.current.chartInstance : chartRef.current?.ctx?.chart;
-    const canvas = canvasRef.current;
-    let rect = { left: 0, top: 0, width: 0, height: 0 };
-    if (chart && chart.canvas) {
-      rect = chart.canvas.getBoundingClientRect();
-    } else if (canvas && canvas.parentElement) {
-      rect = canvas.parentElement.getBoundingClientRect();
-    }
-    if (canvas) {
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-      canvas.style.position = 'fixed';
-      canvas.style.left = rect.left + 'px';
-      canvas.style.top = rect.top + 'px';
-      canvas.style.width = rect.width + 'px';
-      canvas.style.height = rect.height + 'px';
-      canvas.style.zIndex = '99999';
-      canvas.style.pointerEvents = 'auto';
-      canvas.style.opacity = '1';
-      console.log('Fixed canvas at', rect);
-    }
-    if (chart && canvas && chart.scales && chart.scales.r) {
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // Draw fully opaque green rectangle
-      ctx.save();
-      ctx.globalAlpha = 1;
-      ctx.fillStyle = 'lime';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.restore();
-      // Draw thick yellow border
-      ctx.save();
-      ctx.strokeStyle = 'yellow';
-      ctx.lineWidth = 8;
-      ctx.strokeRect(0, 0, canvas.width, canvas.height);
-      ctx.restore();
-      // Draw a small blue circle at the calculated center
-      const scale = chart.scales.r;
-      const centerX = scale.xCenter;
-      const centerY = scale.yCenter;
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, 16, 0, Math.PI * 2);
-      ctx.fillStyle = '#4FC3F7';
-      ctx.globalAlpha = 1;
-      ctx.fill();
-      ctx.restore();
-      // Draw visible text label
-      ctx.save();
-      ctx.font = 'bold 32px sans-serif';
-      ctx.fillStyle = 'black';
-      ctx.fillText('CANVAS VISIBLE', 32, 48);
-      ctx.restore();
-      console.log('Canvas debug:', { canvasW: canvas.width, canvasH: canvas.height, centerX, centerY });
-    }
-  }, [editLabels.length]);
+    const timer = setTimeout(() => {
+      const chart = chartRef.current;
+      console.log('Chart ref:', chart);
+      
+      // Backup method: Find canvas by DOM selector
+      const chartContainer = document.querySelector('.skills-spider-chart');
+      const canvasElement = chartContainer?.querySelector('canvas');
+      
+      console.log('Backup method:', { chartContainer, canvasElement });
+      
+      // Try different ways to access the chart instance
+      let chartInstance = null;
+      let canvas = null;
+      
+      if (chart && chart.chartInstance) {
+        chartInstance = chart.chartInstance;
+        canvas = chartInstance.canvas;
+      } else if (chart && chart.chart) {
+        chartInstance = chart.chart;
+        canvas = chartInstance.canvas;
+      } else if (chart) {
+        chartInstance = chart;
+        canvas = chart.canvas;
+      } else if (canvasElement) {
+        // Use DOM-found canvas as fallback
+        canvas = canvasElement;
+        console.log('Using DOM-found canvas');
+      }
+      
+      console.log('Final canvas:', canvas);
+      
+      if (canvas) {
+        const parentContainer = canvas.parentElement;
+        
+        console.log('Canvas found:', { canvas, parentContainer });
+        
+        if (!parentContainer) {
+          console.log('No parent container found');
+          return;
+        }
+        
+        // Get the actual chart center and radius
+        let centerX = canvas.width / 2;
+        let centerY = canvas.height / 2;
+        let maxRadius = Math.min(canvas.width, canvas.height) / 2 - 50;
+        
+        // Try to get exact chart dimensions from Chart.js instance
+        if (chartInstance && chartInstance.scales && chartInstance.scales.r) {
+          const scale = chartInstance.scales.r;
+          centerX = scale.xCenter;
+          centerY = scale.yCenter;
+          maxRadius = scale.drawingArea - 15; // Subtract 15px to stay comfortably within chart boundary
+          console.log('Using Chart.js scale:', { centerX, centerY, maxRadius });
+        } else {
+          // Fallback: calculate based on typical radar chart layout
+          const padding = 90; // Increased padding to account for labels and ensure we stay within bounds
+          centerX = canvas.width / 2;
+          centerY = canvas.height / 2;
+          maxRadius = Math.min(canvas.width, canvas.height) / 2 - padding;
+          console.log('Using fallback dimensions:', { centerX, centerY, maxRadius });
+        }
+        
+        // Create overlay canvas for heartbeat waves
+        const overlayCanvas = document.createElement('canvas');
+        overlayCanvas.width = canvas.width;
+        overlayCanvas.height = canvas.height;
+        overlayCanvas.style.position = 'absolute';
+        overlayCanvas.style.top = '0';
+        overlayCanvas.style.left = '0';
+        overlayCanvas.style.pointerEvents = 'none';
+        overlayCanvas.style.zIndex = '9999';
+        
+        parentContainer.appendChild(overlayCanvas);
+        console.log('Overlay canvas created and appended');
+        
+        const ctx = overlayCanvas.getContext('2d');
+        if (!ctx) {
+          console.log('Failed to get canvas context');
+          return;
+        }
+        
+        let waveRadius = 0;
+        let animationId: number;
+        
+        // Helper function to draw polygon wave matching radar chart shape
+        const drawPolygonWave = (radius: number, opacity: number, lineWidth: number) => {
+          const numPoints = editLabels.length; // Match number of chart data points
+          const angleStep = (2 * Math.PI) / numPoints;
+          const startAngle = -Math.PI / 2; // Start from top like radar chart
+          
+          ctx.globalAlpha = opacity;
+          ctx.strokeStyle = '#33876a';
+          ctx.lineWidth = lineWidth;
+          ctx.beginPath();
+          
+          // Draw polygon by connecting points around the circle
+          for (let i = 0; i <= numPoints; i++) {
+            const angle = startAngle + (i * angleStep);
+            const x = centerX + Math.cos(angle) * radius;
+            const y = centerY + Math.sin(angle) * radius;
+            
+            if (i === 0) {
+              ctx.moveTo(x, y);
+            } else {
+              ctx.lineTo(x, y);
+            }
+          }
+          
+          ctx.closePath();
+          ctx.stroke();
+        };
+
+        const animate = () => {
+          // Clear canvas
+          ctx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+          
+          // Draw heartbeat waves with polygon shape matching radar chart
+          if (waveRadius > 0 && waveRadius <= maxRadius) {
+            // Main wave - bright and bold
+            const mainOpacity = Math.max(0.1, 0.9 * (1 - waveRadius / maxRadius));
+            drawPolygonWave(waveRadius, mainOpacity, 4);
+            
+            // Fade trail 1 - slightly behind and fainter
+            if (waveRadius > 15) {
+              const trail1Radius = waveRadius - 15;
+              if (trail1Radius <= maxRadius) {
+                const trail1Opacity = Math.max(0.05, 0.6 * (1 - trail1Radius / maxRadius));
+                drawPolygonWave(trail1Radius, trail1Opacity, 3);
+              }
+            }
+            
+            // Fade trail 2 - further behind and even fainter
+            if (waveRadius > 30) {
+              const trail2Radius = waveRadius - 30;
+              if (trail2Radius <= maxRadius) {
+                const trail2Opacity = Math.max(0.02, 0.3 * (1 - trail2Radius / maxRadius));
+                drawPolygonWave(trail2Radius, trail2Opacity, 2);
+              }
+            }
+            
+            // Fade trail 3 - most behind and very faint
+            if (waveRadius > 45) {
+              const trail3Radius = waveRadius - 45;
+              if (trail3Radius <= maxRadius) {
+                const trail3Opacity = Math.max(0.01, 0.15 * (1 - trail3Radius / maxRadius));
+                drawPolygonWave(trail3Radius, trail3Opacity, 1);
+              }
+            }
+          }
+          
+          waveRadius += 2.5; // Smooth wave expansion
+          
+          // Reset wave when it reaches the chart boundary
+          if (waveRadius > maxRadius + 10) {
+            waveRadius = 0;
+            // Pause between heartbeats for realistic rhythm
+            setTimeout(() => {
+              animationId = requestAnimationFrame(animate);
+            }, 1000); // 1 second pause between heartbeats
+          } else {
+            animationId = requestAnimationFrame(animate);
+          }
+        };
+        
+        // Start animation
+        console.log('Starting heartbeat animation');
+        animate();
+        
+        return () => {
+          console.log('Cleanup heartbeat animation');
+          if (animationId) {
+            cancelAnimationFrame(animationId);
+          }
+          if (overlayCanvas && parentContainer.contains(overlayCanvas)) {
+            parentContainer.removeChild(overlayCanvas);
+          }
+        };
+      } else {
+        console.log('No canvas found at all!');
+      }
+    }, 3000); // Increased delay to 3 seconds
+    
+    return () => clearTimeout(timer);
+  }, [skills]);
 
   // Gradient fill for radar
   const getGradient = (ctx: { chart: Chart<'radar'> & { ctx: CanvasRenderingContext2D; chartArea?: ChartArea } }) => {
@@ -130,7 +255,10 @@ const AboutSection: React.FC = () => {
         pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: '#33876a',
         borderWidth: 3,
+        pointRadius: 4,
+        pointHoverRadius: 6,
         fill: true,
+        tension: 0.1,
       },
     ],
   };
@@ -138,8 +266,7 @@ const AboutSection: React.FC = () => {
   const options = {
     responsive: true,
     animation: {
-      duration: 900,
-      easing: 'easeOutQuart' as const,
+      duration: 0, // Disable animations
     },
     plugins: {
       legend: { display: false },
@@ -243,7 +370,7 @@ const AboutSection: React.FC = () => {
             onDoubleClick={handleChartDoubleClick}
             title="Double-click to edit (admin only)"
           >
-            {/* Wrapper for stacking context */}
+            {/* Wrapper for chart */}
             <div style={{ position: 'relative', width: '100%', height: 420 }}>
               <Radar
                 ref={chartRef}
@@ -253,8 +380,6 @@ const AboutSection: React.FC = () => {
                 height={420}
                 style={{ zIndex: 1, position: 'relative' }}
               />
-              {/* Overlay canvas absolutely positioned at root for debug */}
-              <canvas ref={canvasRef} />
             </div>
               {editMode && (
                 <div style={{
