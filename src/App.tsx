@@ -31,7 +31,9 @@ function App() {
     return (
       <div className="loading-screen">
         <div className="loading-content">
-          <div className="loading-logo">SM</div>
+          <div className="loading-logo">
+            <img src="/logo.svg" alt="Shashwat Mishra" className="loading-logo-image" />
+          </div>
           <div className="loading-text">Shashwat Mishra</div>
           <div className="loading-spinner"></div>
         </div>
@@ -51,7 +53,7 @@ function App() {
         ))}
       </div>
       <NavBar />
-      <main className="hero-section hero-flex" id="hero">
+      <section className="hero-section hero-flex" id="hero">
         <div className="hero-portrait-wrapper">
           <img src="/src/assets/portrait.png" alt="Shashwat Mishra Portrait" className="hero-portrait-gradient" />
         </div>
@@ -66,7 +68,7 @@ function App() {
             computer vision, and MLOps.
           </p>
         </div>
-      </main>
+      </section>
       <AboutSection />
       <PortfolioSection />
       <ServicesSection />
