@@ -11,6 +11,152 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  /* Temporarily disable smooth scrolling for debugging */
+  /* scroll-behavior: smooth; */
+}
+
+/* Enhanced smooth scrolling for all elements */
+html {
+  /* scroll-behavior: smooth; */
+  scroll-padding-top: 64px; /* Match navbar height (64px) */
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Page transition animations */
+section {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+section.transitioning-out {
+  opacity: 0;
+  transform: translateY(-30px) scale(0.95);
+  transition: all 0.3s cubic-bezier(0.4, 0, 1, 1);
+}
+
+section.transitioning-in {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  animation: slideInFadeScale 0.6s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideInFadeScale {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(10px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Smooth transitions for all page elements */
+.main-content {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Enhanced section transitions with stagger effect */
+.hero-section, .about-section, .portfolio-section, .services-section, .contact-section {
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Add subtle blur effect during transitions */
+.transitioning-out {
+  filter: blur(2px);
+}
+
+.transitioning-in {
+  filter: blur(0px);
+}
+
+/* Navbar transition indicator */
+.navbar-links li a {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.navbar-links li a.transitioning {
+  opacity: 0.7;
+  transform: scale(0.95);
+}
+
+.navbar-links li a.active {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(255, 179, 71, 0.3) !important;
+  color: #ffb347 !important;
+  background: rgba(255,179,71,0.25) !important;
+  border: 2px solid #ffb347 !important; /* Temporary debug border */
+}
+
+.navbar-links li a.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 179, 71, 0.2), transparent);
+  animation: activeShimmer 2s ease-in-out infinite;
+}
+
+.navbar-links li a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, var(--color-nav-active), rgba(255, 179, 71, 0.6));
+  border-radius: 50%;
+  animation: activeIndicator 0.3s ease-out, activePulse 2s ease-in-out infinite 0.5s;
+  box-shadow: 0 0 8px rgba(255, 179, 71, 0.6);
+}
+
+@keyframes activeIndicator {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes activeShimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes activePulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.2);
+    opacity: 0.8;
+  }
 }
 
 a {
@@ -52,6 +198,32 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Ensure all sections have proper heights for scroll detection */
+section {
+  min-height: 100vh;
+  scroll-margin-top: 80px; /* Offset for fixed navbar */
+}
+
+#hero {
+  min-height: 100vh;
+}
+
+#about {
+  min-height: 100vh;
+}
+
+#portfolio {
+  min-height: 100vh;
+}
+
+#services {
+  min-height: 100vh;
+}
+
+#contact {
+  min-height: 80vh;
 }
 
 @media (prefers-color-scheme: light) {
