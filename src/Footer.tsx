@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
 const Footer: React.FC = () => {
   return (
@@ -10,7 +12,7 @@ const Footer: React.FC = () => {
             LinkedIn
           </a>
           <a href="https://github.com/shashwat-mishra" className="footer-link" rel="noopener noreferrer" target="_blank">
-            GitHub
+            <FontAwesomeIcon icon={faGithub} />
           </a>
           <a href="https://twitter.com/shashwat_ml" className="footer-link" rel="noopener noreferrer" target="_blank">
             Twitter
