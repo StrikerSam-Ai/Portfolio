@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faLinkedin, faXTwitter, faMedium } from '@fortawesome/free-brands-svg-icons';
 
 const Footer: React.FC = () => {
   return (
@@ -9,16 +9,16 @@ const Footer: React.FC = () => {
         <span>© {new Date().getFullYear()} Shashwat Mishra. All rights reserved.</span>
         <div className="footer-socials">
           <a href="https://linkedin.com/in/shashwat-mishra" className="footer-link" rel="noopener noreferrer" target="_blank">
-            LinkedIn
+            <FontAwesomeIcon icon={faLinkedin} />
           </a>
           <a href="https://github.com/shashwat-mishra" className="footer-link" rel="noopener noreferrer" target="_blank">
             <FontAwesomeIcon icon={faGithub} />
           </a>
           <a href="https://twitter.com/shashwat_ml" className="footer-link" rel="noopener noreferrer" target="_blank">
-            Twitter
+            <FontAwesomeIcon icon={faXTwitter} />
           </a>
           <a href="https://medium.com/@shashwat-mishra" className="footer-link" rel="noopener noreferrer" target="_blank">
-            Medium
+            <FontAwesomeIcon icon={faMedium} />
           </a>
         </div>
       </div>
