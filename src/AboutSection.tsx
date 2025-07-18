@@ -10,6 +10,7 @@ import {
   Legend
 } from 'chart.js';
 import type { Chart, ChartArea } from 'chart.js';
+import { Link } from 'react-router-dom';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
@@ -310,20 +311,15 @@ const AboutSection: React.FC = () => {
       <div className="about-content about-custom-grid">
         <div className="about-bio">{/* grid-area: bio */}
           <p>
-            I'm a passionate AI Engineer with over 5 years of experience in developing cutting-edge machine learning solutions. 
-            My journey in AI began during my computer science studies, where I discovered the transformative power of 
-            artificial intelligence and its potential to solve complex real-world problems.
+          I’m an AI engineering student with a passion for building intelligent and scalable machine learning systems.
+          My journey in AI started in computer science, where I discovered the excitement of applying cutting-edge technology to solve real-world challenges.
           </p>
           <p>
-            I specialize in building scalable AI systems, from natural language processing applications to computer vision 
-            solutions. My expertise spans the entire ML lifecycle - from data preprocessing and model development to 
-            deployment and monitoring. I'm particularly passionate about MLOps and ensuring that AI solutions are not 
-            just accurate, but also reliable, scalable, and maintainable.
+          I’m an AI engineering student with a passion for building intelligent and scalable machine learning systems. 
+          My journey in AI started in computer science, where I discovered the excitement of applying cutting-edge technology to solve real-world challenges.
           </p>
           <p>
-            When I'm not coding or training models, you'll find me contributing to open-source projects, writing technical 
-            blog posts, or mentoring aspiring AI engineers. I believe in the power of knowledge sharing and the importance 
-            of building AI systems that are both innovative and ethically sound.
+          Beyond coursework, I love sharing ideas in open-source communities, writing about new tech, and working with fellow learners to create meaningful AI solutions.
           </p>
         </div>
         <div className="about-skills">{/* grid-area: skills */}
@@ -379,7 +375,7 @@ const AboutSection: React.FC = () => {
               </li>
             ))}
           </ul>
-          <a href="https://scholar.google.com/citations?user=shashwat" className="about-viewall-btn" target="_blank" rel="noopener noreferrer">View All Publications</a>
+          <Link to="/writing-records?tab=research" className="about-viewall-btn">View All Publications</Link>
         </div>
         <div className="about-progress">{/* grid-area: progress */}
           <h3>📈 Recent Progress Reports</h3>
@@ -392,7 +388,7 @@ const AboutSection: React.FC = () => {
               </li>
             ))}
           </ul>
-          <a href="https://progress-reports.com/" className="about-viewall-btn" target="_blank" rel="noopener noreferrer">View All Progress Reports</a>
+          <Link to="/writing-records?tab=progress" className="about-viewall-btn">View All Progress Reports</Link>
         </div>
         <div className="about-blogs">{/* grid-area: blogs */}
           <h3>📝 Recent Blogs & Articles</h3>
@@ -405,7 +401,7 @@ const AboutSection: React.FC = () => {
               </li>
             ))}
           </ul>
-          <a href="https://medium.com/@shashwat-mishra" className="about-viewall-btn" target="_blank" rel="noopener noreferrer">View All Blogs</a>
+          <Link to="/writing-records?tab=blog" className="about-viewall-btn">View All Blogs</Link>
         </div>
       </div>
     </section>
