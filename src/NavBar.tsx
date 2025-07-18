@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const navItems = [
   { id: 'hero', label: 'Home' },
@@ -44,6 +45,11 @@ const NavBar: React.FC = () => {
             </li>
           )
         })}
+        <li>
+          <Link to="/writing-records" className="navbar-link-writing-records">
+            Writing Records
+          </Link>
+        </li>
       </ul>
     </nav>
   );
