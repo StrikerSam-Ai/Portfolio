@@ -65,13 +65,12 @@ function App() {
               </div>
               <div className="hero-content">
                 <h1 className="hero-name">Shashwat Mishra</h1>
-                <h2 className="hero-title">AI Engineer & Machine Learning Specialist</h2>
-                <p className="hero-tagline">Transforming ideas into intelligent solutions through cutting-edge AI and machine learning</p>
+                <h2 className="hero-title">Aspiring AI Engineer </h2>
+                <p className="hero-tagline">Eager learner passionate about deep learning, defence tech, and AI innovation. Growing through impactful research, creative projects, and collaborations.</p>
                 <button className="btn-grad" onClick={scrollToContact}>Let's Build Something Amazing</button>
                 <p className="hero-description">
                   Passionate about developing AI-powered applications, building scalable ML systems, 
-                  and creating innovative solutions that drive business value. Specialized in NLP, 
-                  computer vision, and MLOps.
+                  and creating innovative solutions to real life problems. Dedicated to deepening my expertise in the domain of MLOps, Computer Vision, NLP and applying my knowledge to impactful, collaborative projects.
                 </p>
               </div>
             </section>
