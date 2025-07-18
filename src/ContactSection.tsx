@@ -119,8 +119,8 @@ const ContactSection: React.FC = () => {
               <span className="contact-icon">📧</span>
               <div>
                 <strong>Email:</strong>
-                <a href="mailto:shashwat.mishra@example.com" className="contact-link">
-                  shashwat.mishra@example.com
+                <a href="mailto:shashwatmishra0369@gmail.com" className="contact-link">
+                  shashwatmishra0369@gmail.com
                 </a>
               </div>
             </div>
@@ -145,11 +145,11 @@ const ContactSection: React.FC = () => {
           <div className="contact-socials">
             <h4>Follow me on:</h4>
             <div className="social-links">
-              <a href="https://linkedin.com/in/shashwat-mishra" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
-                <span className="social-icon">💼</span> LinkedIn
+              <a href="https://www.linkedin.com/in/sam140706/" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
+                <span className="social-icon"></span> LinkedIn
               </a>
-              <a href="https://github.com/shashwat-mishra" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
-                <span className="social-icon">🐙</span> GitHub
+              <a href="https://github.com/StrikerSam-Ai" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
+                <span className="social-icon"><i class="fa-brands fa-github"></i></span> GitHub
               </a>
               <a href="https://twitter.com/shashwat_ml" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
                 <span className="social-icon">🐦</span> Twitter
