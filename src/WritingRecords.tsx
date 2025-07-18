@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
+import { Link, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const blogPosts = [
   { title: "Stuck in a Rut? Here’s Your Way Out", url: "https://medium.com/@shashwat-mishra/stuck-in-a-rut-heres-your-way-out", snippet: "Feeling stuck? Here’s how to break free and find your way forward.", image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example1.png" },
@@ -37,6 +39,15 @@ const WritingRecords: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>('blog');
   const [modalUrl, setModalUrl] = useState<string>("");
   const [featuredIdx, setFeaturedIdx] = useState<number>(0);
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get('tab');
+    if (tab && ['blog', 'progress', 'research'].includes(tab) && tab !== selectedTab) {
+      setSelectedTab(tab);
+    }
+  }, [location.search]);
 
   // Modal overlay for Medium post
   const Modal = ({ url, onClose }: { url: string, onClose: () => void }) => (
@@ -117,6 +128,9 @@ const WritingRecords: React.FC = () => {
       <div style={{ width: '95%', maxWidth: 1100, minHeight: 500, background: 'rgba(30,30,30,0.98)', borderRadius: 16, boxShadow: '0 2px 24px rgba(0,0,0,0.25)', display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '2rem 2rem' }}>
         {/* Tabs */}
         <nav style={{ display: 'flex', borderBottom: '1px solid var(--color-divider)', marginBottom: '2rem', background: 'rgba(24,24,24,0.98)' }}>
+          <Link to="/" style={{ padding: '1rem 1.5rem', color: 'var(--color-primary)', fontWeight: 700, fontFamily: 'monospace', fontSize: '1.1rem', textDecoration: 'none', borderRight: '1px solid var(--color-divider)' }}>
+            ← Portfolio
+          </Link>
           {TABS.map(tab => (
             <button
               key={tab.key}
