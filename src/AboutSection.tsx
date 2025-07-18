@@ -338,9 +338,9 @@ const AboutSection: React.FC = () => {
           <h3>Work Experience</h3>
           <ul>
             <li>
-              <strong>Senior AI Engineer</strong> - TechCorp Inc. (2022-Present)
+              <strong>Executive Promotions</strong>-MSA AVV Amaravati(2024-current)
               <br />
-              <span className="timeline-detail">Leading ML initiatives, developing production-ready AI models, and mentoring junior engineers.</span>
+              <span className="timeline-detail">Volunteering in the Campus Microsoft Student Ambassdors Team as Promtions Executive spreading information amongst peers.</span>
             </li>
             <li>
               <strong>Machine Learning Engineer</strong> - DataFlow Solutions (2020-2022)
