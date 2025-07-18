@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub, faLinkedin, faXTwitter, faMedium } from '@fortawesome/free-brands-svg-icons';
 
 interface FormData {
   name: string;
@@ -146,16 +148,16 @@ const ContactSection: React.FC = () => {
             <h4>Follow me on:</h4>
             <div className="social-links">
               <a href="https://www.linkedin.com/in/sam140706/" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
-                <span className="social-icon"></span> LinkedIn
+                <span className="social-icon"><FontAwesomeIcon icon={faLinkedin} /></span> LinkedIn
               </a>
               <a href="https://github.com/StrikerSam-Ai" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
-                <span className="social-icon"><i class="fa-brands fa-github"></i></span> GitHub
+                <span className="social-icon"><FontAwesomeIcon icon={faGithub} /></span> GitHub
               </a>
               <a href="https://twitter.com/shashwat_ml" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
-                <span className="social-icon">🐦</span> Twitter
+                <span className="social-icon"><FontAwesomeIcon icon={faXTwitter} /></span> Twitter
               </a>
               <a href="https://medium.com/@shashwat-mishra" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
-                <span className="social-icon">📝</span> Medium
+                <span className="social-icon"><FontAwesomeIcon icon={faMedium} /></span> Medium
               </a>
             </div>
           </div>
