@@ -338,14 +338,19 @@ const AboutSection: React.FC = () => {
           <h3>Work Experience</h3>
           <ul>
             <li>
-              <strong>Executive Promotions</strong>-MSA AVV Amaravati(2024-current)
+              <strong>Vice President</strong> - Robotics Club @AVV Amaravati (2024-current)
               <br />
-              <span className="timeline-detail">Volunteering in the Campus Microsoft Student Ambassdors Team as Promtions Executive spreading information amongst peers.</span>
+              <span className="timeline-detail">Leading the Robotics Club in organizing events and workshops.</span>
             </li>
             <li>
-              <strong>Machine Learning Engineer</strong> - DataFlow Solutions (2020-2022)
+              <strong>Executive Promotions</strong> - MSA AVV Amaravati (2024-current)
               <br />
-              <span className="timeline-detail">Built recommendation systems and NLP applications serving 1M+ users.</span>
+              <span className="timeline-detail">Volunteering in the Campus Microsoft Student Ambassadors Team as Promotions Executive spreading information amongst peers.</span>
+            </li>
+            <li>
+              <strong>Research & Policy Analyst</strong> - Encode India (2024-current)
+              <br />
+              <span className="timeline-detail">Conducted research and analysis on AI policies and their societal impacts.</span>
             </li>
           </ul>
         </div>
@@ -353,14 +358,14 @@ const AboutSection: React.FC = () => {
           <h3>Education</h3>
           <ul>
             <li>
-              <strong>Master of Science in Computer Science</strong>
+              <strong>Pursuing Bachelor's of Technology in Computer Science Engineering</strong>
               <br />
-              <span className="timeline-detail">Stanford University - Specialization in AI & Machine Learning</span>
+              <span className="timeline-detail">Amrita Vishwa Vidyapeetham University - Specialization in AI & Machine Learning [2024-2028]</span>
             </li>
             <li>
-              <strong>Bachelor of Engineering in Computer Science</strong>
+              <strong>Schooling</strong>
               <br />
-              <span className="timeline-detail">MIT - Graduated with Honors</span>
+              <span className="timeline-detail">St. Xavier's High School - Completed Secondary Education in 2023.</span>
             </li>
           </ul>
         </div>
