@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
 const blogPosts = [
-  { title: "Stuck in a Rut? Here’s Your Way Out", url: "https://medium.com/@shashwat-mishra/stuck-in-a-rut-heres-your-way-out", snippet: "Feeling stuck? Here’s how to break free and find your way forward.", image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example1.png" },
+  { title: "A World without lies", url: "https://medium.com/@shashwatmishra0369/the-world-without-lies-8b241f55b55b", snippet: "Ever thought? How would a world without lies look like ?", image: "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*S_vQvDibV2e3Lc-5" },
   { title: "Pushovers Finish Last — Learn to Say No", url: "https://medium.com/@shashwat-mishra/pushovers-finish-last-learn-to-say-no", snippet: "Why saying no is a superpower for your career and life.", image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example2.png" },
   { title: "The Thought Process Behind My Learning Plan", url: "https://medium.com/@shashwat-mishra/the-thought-process-behind-my-learning-plan", snippet: "How I structure my learning for maximum growth.", image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example3.png" },
   { title: "Math For Machine Learning [Resources]", url: "https://medium.com/@shashwat-mishra/math-for-machine-learning-resources", snippet: "Essential math resources for aspiring ML engineers.", image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example4.png" },
