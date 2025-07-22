@@ -8,16 +8,16 @@ const Footer: React.FC = () => {
       <div className="footer-content">
         <span>© {new Date().getFullYear()} Shashwat Mishra. All rights reserved.</span>
         <div className="footer-socials">
-          <a href="https://linkedin.com/in/shashwat-mishra" className="footer-link" rel="noopener noreferrer" target="_blank">
+          <a href="https://www.linkedin.com/in/sam140706/" className="footer-link" rel="noopener noreferrer" target="_blank">
             <FontAwesomeIcon icon={faLinkedin} />
           </a>
-          <a href="https://github.com/shashwat-mishra" className="footer-link" rel="noopener noreferrer" target="_blank">
+          <a href="https://github.com/StrikerSam-Ai" className="footer-link" rel="noopener noreferrer" target="_blank">
             <FontAwesomeIcon icon={faGithub} />
           </a>
-          <a href="https://twitter.com/shashwat_ml" className="footer-link" rel="noopener noreferrer" target="_blank">
+          <a href="https://x.com/SHASHWATMI67916" className="footer-link" rel="noopener noreferrer" target="_blank">
             <FontAwesomeIcon icon={faXTwitter} />
           </a>
-          <a href="https://medium.com/@shashwat-mishra" className="footer-link" rel="noopener noreferrer" target="_blank">
+          <a href="https://medium.com/@shashwatmishra0369" className="footer-link" rel="noopener noreferrer" target="_blank">
             <FontAwesomeIcon icon={faMedium} />
           </a>
         </div>
