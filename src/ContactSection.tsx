@@ -153,10 +153,10 @@ const ContactSection: React.FC = () => {
               <a href="https://github.com/StrikerSam-Ai" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
                 <span className="social-icon"><FontAwesomeIcon icon={faGithub} /></span> GitHub
               </a>
-              <a href="https://twitter.com/shashwat_ml" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
+              <a href="https://x.com/SHASHWATMI67916" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
                 <span className="social-icon"><FontAwesomeIcon icon={faXTwitter} /></span> Twitter
               </a>
-              <a href="https://medium.com/@shashwat-mishra" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
+              <a href="https://medium.com/@shashwatmishra0369" className="contact-link social-link" target="_blank" rel="noopener noreferrer">
                 <span className="social-icon"><FontAwesomeIcon icon={faMedium} /></span> Medium
               </a>
             </div>
