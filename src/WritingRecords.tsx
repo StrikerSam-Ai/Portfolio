@@ -37,8 +37,10 @@ const TABS = [
 
 const WritingRecords: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>('blog');
-  const [modalUrl, setModalUrl] = useState<string>("");
   const [featuredIdx, setFeaturedIdx] = useState<number>(0);
+  const [modalUrl, setModalUrl] = useState<string>('');
+  const [modalData, setModalData] = useState<any>(null);
+  const [iframeError, setIframeError] = useState<boolean>(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -49,15 +51,325 @@ const WritingRecords: React.FC = () => {
     }
   }, [location.search]);
 
-  // Modal overlay for Medium post
-  const Modal = ({ url, onClose }: { url: string, onClose: () => void }) => (
-    <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.7)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ width: '90vw', maxWidth: 900, height: '80vh', background: '#fff', borderRadius: 12, overflow: 'hidden', position: 'relative', boxShadow: '0 2px 24px rgba(0,0,0,0.25)' }}>
-        <button onClick={onClose} style={{ position: 'absolute', top: 10, right: 18, zIndex: 2, background: 'rgba(0,0,0,0.1)', border: 'none', borderRadius: '50%', width: 36, height: 36, fontSize: 22, cursor: 'pointer' }}>×</button>
-        <iframe src={url} title="Medium Post" style={{ width: '100%', height: '100%', border: 'none', background: '#fff' }} />
+  // Open post in modal with fallback options
+  const openPost = (url: string, data: any) => {
+    setModalUrl(url);
+    setModalData(data);
+    setIframeError(false);
+  };
+
+  // Close modal
+  const closeModal = () => {
+    setModalUrl('');
+    setModalData(null);
+    setIframeError(false);
+  };
+
+  // Open in new tab
+  const openInNewTab = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  // Enhanced Modal Component with fallback
+  const EnhancedModal = () => {
+    if (!modalUrl || !modalData) return null;
+
+    return (
+      <div style={{ 
+        position: 'fixed', 
+        top: 0, 
+        left: 0, 
+        width: '100vw', 
+        height: '100vh', 
+        background: 'rgba(0,0,0,0.85)', 
+        zIndex: 9999, 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        backdropFilter: 'blur(8px)' 
+      }}>
+        <div style={{ 
+          width: '95vw', 
+          maxWidth: 1000, 
+          height: '90vh', 
+          background: 'rgba(24,24,24,0.98)', 
+          borderRadius: 16, 
+          overflow: 'hidden', 
+          position: 'relative', 
+          boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+          border: '1px solid rgba(255,179,71,0.2)' 
+        }}>
+          {/* Header */}
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between', 
+            padding: '1rem 1.5rem', 
+            borderBottom: '1px solid rgba(255,179,71,0.2)',
+            background: 'rgba(40,40,40,0.5)' 
+          }}>
+            <div style={{ 
+              color: 'var(--color-primary)', 
+              fontFamily: 'monospace', 
+              fontWeight: 700, 
+              fontSize: '1.2rem',
+              maxWidth: '70%',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap'
+            }}>
+              {modalData.title}
+            </div>
+            <button 
+              onClick={closeModal} 
+              style={{ 
+                background: 'rgba(255,179,71,0.1)', 
+                border: '1px solid var(--color-primary)', 
+                borderRadius: 8, 
+                width: 40, 
+                height: 40, 
+                fontSize: 20, 
+                cursor: 'pointer',
+                color: 'var(--color-primary)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.2s'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'var(--color-primary)';
+                e.currentTarget.style.color = '#181818';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255,179,71,0.1)';
+                e.currentTarget.style.color = 'var(--color-primary)';
+              }}
+            >
+              ×
+            </button>
+          </div>
+
+          {/* Content */}
+          <div style={{ height: 'calc(100% - 70px)', display: 'flex', flexDirection: 'column' }}>
+            {!iframeError ? (
+              // Try iframe first
+              <>
+                <iframe 
+                  src={modalUrl} 
+                  title={modalData.title}
+                  style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    border: 'none', 
+                    background: '#fff' 
+                  }}
+                  onError={() => setIframeError(true)}
+                  onLoad={(e) => {
+                    // Check if iframe loaded successfully
+                    try {
+                      const iframe = e.target as HTMLIFrameElement;
+                      iframe.contentWindow?.document;
+                    } catch (error) {
+                      setIframeError(true);
+                    }
+                  }}
+                />
+                {/* Loading fallback after 3 seconds */}
+                <div style={{ 
+                  position: 'absolute', 
+                  top: '50%', 
+                  left: '50%', 
+                  transform: 'translate(-50%, -50%)',
+                  opacity: 0,
+                  animation: 'fadeIn 0.5s ease-in-out 3s forwards'
+                }}>
+                  <style>
+                    {`
+                      @keyframes fadeIn {
+                        from { opacity: 0; }
+                        to { opacity: 1; }
+                      }
+                    `}
+                  </style>
+                  <div style={{ 
+                    textAlign: 'center', 
+                    color: 'var(--color-secondary)', 
+                    fontFamily: 'monospace' 
+                  }}>
+                    <p>Having trouble loading? Try the options below:</p>
+                    <button 
+                      onClick={() => setIframeError(true)}
+                      style={{
+                        background: 'var(--color-primary)',
+                        color: '#181818',
+                        border: 'none',
+                        borderRadius: 8,
+                        padding: '0.5rem 1rem',
+                        fontFamily: 'monospace',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        marginTop: '0.5rem'
+                      }}
+                    >
+                      Show Alternatives
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              // Fallback content when iframe fails
+              <div style={{ 
+                padding: '2rem', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                height: '100%',
+                textAlign: 'center' 
+              }}>
+                <div style={{ 
+                  fontSize: '3rem', 
+                  marginBottom: '1rem',
+                  opacity: 0.7 
+                }}>📄</div>
+                
+                <h3 style={{ 
+                  color: 'var(--color-primary)', 
+                  fontFamily: 'monospace', 
+                  marginBottom: '1rem',
+                  fontSize: '1.3rem' 
+                }}>
+                  Content Protection Active
+                </h3>
+                
+                <p style={{ 
+                  color: 'var(--color-secondary)', 
+                  fontFamily: 'monospace', 
+                  marginBottom: '1.5rem',
+                  maxWidth: '500px',
+                  lineHeight: 1.6 
+                }}>
+                  This content cannot be embedded due to security policies. Choose an option below to read the full article:
+                </p>
+
+                {modalData.snippet && (
+                  <div style={{ 
+                    background: 'rgba(40,40,40,0.7)', 
+                    padding: '1rem', 
+                    borderRadius: 8, 
+                    marginBottom: '2rem',
+                    maxWidth: '600px',
+                    border: '1px solid rgba(255,179,71,0.2)' 
+                  }}>
+                    <p style={{ 
+                      color: 'var(--color-secondary)', 
+                      fontFamily: 'monospace', 
+                      fontSize: '1rem',
+                      fontStyle: 'italic',
+                      margin: 0 
+                    }}>
+                      "{modalData.snippet}"
+                    </p>
+                  </div>
+                )}
+
+                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <button 
+                    onClick={() => openInNewTab(modalUrl)}
+                    style={{
+                      background: 'var(--color-primary)',
+                      color: '#181818',
+                      border: 'none',
+                      borderRadius: 8,
+                      padding: '0.8rem 1.5rem',
+                      fontFamily: 'monospace',
+                      fontWeight: 700,
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                    }}
+                  >
+                    <span>🚀</span> Open in New Tab
+                  </button>
+
+                  <button 
+                    onClick={() => {
+                      navigator.clipboard.writeText(modalUrl);
+                      // Show copied feedback
+                      const button = document.activeElement as HTMLButtonElement;
+                      const originalText = button.innerHTML;
+                      button.innerHTML = '✅ Copied!';
+                      setTimeout(() => {
+                        button.innerHTML = originalText;
+                      }, 2000);
+                    }}
+                    style={{
+                      background: 'rgba(255,179,71,0.1)',
+                      color: 'var(--color-primary)',
+                      border: '1px solid var(--color-primary)',
+                      borderRadius: 8,
+                      padding: '0.8rem 1.5rem',
+                      fontFamily: 'monospace',
+                      fontWeight: 600,
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem'
+                    }}
+                  >
+                    <span>📋</span> Copy Link
+                  </button>
+
+                  <button 
+                    onClick={() => setIframeError(false)}
+                    style={{
+                      background: 'rgba(100,100,100,0.2)',
+                      color: 'var(--color-secondary)',
+                      border: '1px solid rgba(100,100,100,0.5)',
+                      borderRadius: 8,
+                      padding: '0.8rem 1.5rem',
+                      fontFamily: 'monospace',
+                      fontWeight: 600,
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem'
+                    }}
+                  >
+                    <span>🔄</span> Try Again
+                  </button>
+                </div>
+
+                {modalData.date && (
+                  <div style={{ 
+                    marginTop: '2rem', 
+                    color: 'var(--color-muted)', 
+                    fontFamily: 'monospace', 
+                    fontSize: '0.9rem' 
+                  }}>
+                    Published: {modalData.date}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   // Blog Magazine Layout
   const BlogMagazine = () => (
@@ -68,7 +380,7 @@ const WritingRecords: React.FC = () => {
         <div style={{ flex: 1 }}>
           <h2 style={{ color: 'var(--color-primary)', fontFamily: 'monospace', fontWeight: 700, fontSize: '1.5rem', marginBottom: 8 }}>{blogPosts[featuredIdx].title}</h2>
           <p style={{ color: 'var(--color-secondary)', fontFamily: 'monospace', fontSize: '1.1rem', marginBottom: 12 }}>{blogPosts[featuredIdx].snippet}</p>
-          <button onClick={() => setModalUrl(blogPosts[featuredIdx].url)} style={{ background: 'var(--color-primary)', color: '#181818', border: 'none', borderRadius: 8, padding: '0.7rem 1.3rem', fontWeight: 700, fontFamily: 'monospace', fontSize: '1rem', cursor: 'pointer' }}>Read Full Post</button>
+          <button onClick={() => openPost(blogPosts[featuredIdx].url, blogPosts[featuredIdx])} style={{ background: 'var(--color-primary)', color: '#181818', border: 'none', borderRadius: 8, padding: '0.7rem 1.3rem', fontWeight: 700, fontFamily: 'monospace', fontSize: '1rem', cursor: 'pointer' }}>Read Full Post</button>
         </div>
       </div>
       {/* Other Posts */}
@@ -94,7 +406,7 @@ const WritingRecords: React.FC = () => {
           <div key={idx} style={{ position: 'relative', marginBottom: 36 }}>
             <div style={{ position: 'absolute', left: -41, top: 0, width: 24, height: 24, background: 'var(--color-primary)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#181818', fontWeight: 700, fontSize: 14, border: '3px solid #181818' }}>{progressReports.length - idx}</div>
             <div style={{ background: 'rgba(40,40,40,0.92)', borderRadius: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: '1.1rem 1.3rem', cursor: 'pointer', transition: 'box-shadow 0.2s', borderLeft: '4px solid var(--color-secondary)' }}
-              onClick={() => setModalUrl(report.url)}
+              onClick={() => openPost(report.url, report)}
             >
               <div style={{ color: 'var(--color-primary)', fontWeight: 700, fontFamily: 'monospace', fontSize: '1.1rem', marginBottom: 4 }}>{report.title}</div>
               <div style={{ color: 'var(--color-muted)', fontSize: '0.98rem', fontFamily: 'monospace', marginBottom: 2 }}>{report.date}</div>
@@ -111,7 +423,7 @@ const WritingRecords: React.FC = () => {
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2.2rem', justifyContent: 'center', width: '100%', padding: '2rem 0' }}>
       {researchPublications.map((pub, idx) => (
         <div key={idx} style={{ width: 150, height: 220, background: 'linear-gradient(135deg, var(--color-primary) 60%, var(--color-secondary) 100%)', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.12)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', cursor: 'pointer', position: 'relative', transition: 'transform 0.18s', overflow: 'hidden' }}
-          onClick={() => setModalUrl(pub.url)}
+          onClick={() => openPost(pub.url, pub)}
         >
           <img src={pub.image} alt={pub.title} style={{ width: '100%', height: 110, objectFit: 'cover', borderTopLeftRadius: 12, borderTopRightRadius: 12 }} />
           <div style={{ padding: '0.7rem 0.6rem 0.5rem 0.6rem', width: '100%', background: 'rgba(30,30,30,0.98)', borderBottomLeftRadius: 12, borderBottomRightRadius: 12, minHeight: 80, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -161,7 +473,7 @@ const WritingRecords: React.FC = () => {
           {selectedTab === 'research' && <ResearchBookshelf />}
         </div>
       </div>
-      {modalUrl && <Modal url={modalUrl} onClose={() => setModalUrl("")} />}
+      <EnhancedModal />
     </div>
   );
 };
