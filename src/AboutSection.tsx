@@ -34,59 +34,123 @@ const getStoredSkills = (): Skill[] => {
   return defaultSkills;
 };
 
-const progressReports = [
-  {
-    title: 'Q4 2024 - AI Model Optimization',
-    desc: 'Improved model accuracy by 15% while reducing inference time by 40% through advanced optimization techniques.',
-    url: 'https://progress-reports.com/q4-2024'
+// Dynamic content with timestamps for automatic sorting (same as WritingRecords)
+const blogPosts = [
+  { 
+    title: "A World without lies", 
+    url: "https://medium.com/@shashwatmishra0369/the-world-without-lies-8b241f55b55b", 
+    snippet: "Ever thought? How would a world without lies look like ?", 
+    image: "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*S_vQvDibV2e3Lc-5",
+    publishedDate: new Date('2025-07-20'),
+    category: 'Philosophy'
   },
-  {
-    title: 'Q3 2024 - MLOps Implementation',
-    desc: 'Successfully deployed automated ML pipeline reducing deployment time from 2 weeks to 2 hours.',
-    url: 'https://progress-reports.com/q3-2024'
+  { 
+    title: "Pushovers Finish Last — Learn to Say No", 
+    url: "https://medium.com/@shashwat-mishra/pushovers-finish-last-learn-to-say-no", 
+    snippet: "Why saying no is a superpower for your career and life.", 
+    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example2.png",
+    publishedDate: new Date('2025-07-18'),
+    category: 'Career'
   },
-  {
-    title: 'Q2 2024 - NLP System Enhancement',
-    desc: 'Enhanced sentiment analysis system achieving 94% accuracy across multiple languages.',
-    url: 'https://progress-reports.com/q2-2024'
-  }
-];
+  { 
+    title: "The Thought Process Behind My Learning Plan", 
+    url: "https://medium.com/@shashwat-mishra/the-thought-process-behind-my-learning-plan", 
+    snippet: "How I structure my learning for maximum growth.", 
+    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example3.png",
+    publishedDate: new Date('2025-07-15'),
+    category: 'Learning'
+  },
+  { 
+    title: "Math For Machine Learning [Resources]", 
+    url: "https://medium.com/@shashwat-mishra/math-for-machine-learning-resources", 
+    snippet: "Essential math resources for aspiring ML engineers.", 
+    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example4.png",
+    publishedDate: new Date('2025-07-10'),
+    category: 'Resources'
+  },
+  { 
+    title: "You Are NOT Dumb, You Just Lack the Prerequisites", 
+    url: "https://medium.com/@shashwat-mishra/you-are-not-dumb-you-just-lack-the-prerequisites", 
+    snippet: "Why background knowledge matters more than you think.", 
+    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example5.png",
+    publishedDate: new Date('2025-07-05'),
+    category: 'Learning'
+  },
+  { 
+    title: "Why I Started Documenting My Grind—and Why You Might Consider It Too", 
+    url: "https://medium.com/@shashwat-mishra/why-i-started-documenting-my-grind-and-why-you-might-consider-it-too", 
+    snippet: "The power of public learning and sharing your journey.", 
+    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example6.png",
+    publishedDate: new Date('2025-06-28'),
+    category: 'Personal'
+  },
+  { 
+    title: "From Marketing to Code: Why I Made the Switch", 
+    url: "https://medium.com/@shashwat-mishra/from-marketing-to-code-why-i-made-the-switch", 
+    snippet: "My journey from marketing to software engineering.", 
+    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example7.png",
+    publishedDate: new Date('2025-06-20'),
+    category: 'Career'
+  },
+].sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime()); // Sort by most recent
 
-const blogs = [
-  {
-    title: 'Building Scalable ML Pipelines with Kubernetes',
-    desc: 'Medium - 15K+ views, Featured in AI Engineering Weekly',
-    url: 'https://medium.com/@shashwat-mishra/building-scalable-ml-pipelines-with-kubernetes-123456'
+const researchPublications = [
+  { 
+    title: "AI-Driven Progress Tracking Systems: A Modern Approach", 
+    url: "https://medium.com/@shashwat-mishra/ai-progress-tracking", 
+    author: "S. Mishra", 
+    year: "2025", 
+    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*research1.png",
+    publishedDate: new Date('2025-07-15'),
+    journal: "Tech Innovation Journal",
+    status: 'published'
   },
-  {
-    title: 'The Future of MLOps: Best Practices for 2024',
-    desc: 'Towards Data Science - 8K+ views, Top 10 trending article',
-    url: 'https://towardsdatascience.com/the-future-of-mlops-best-practices-2024-abcdef'
+  { 
+    title: "Gamification in Personal Development: Psychological Impact", 
+    url: "https://medium.com/@shashwat-mishra/gamification-research", 
+    author: "S. Mishra", 
+    year: "2024", 
+    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*research2.png",
+    publishedDate: new Date('2024-12-10'),
+    journal: "Behavioral Psychology Review",
+    status: 'published'
   },
-  {
-    title: 'Optimizing Transformer Models for Production',
-    desc: 'AI Engineering Blog - 12K+ views, Featured on LinkedIn',
-    url: 'https://aiengineeringblog.com/optimizing-transformers-production'
-  }
-];
+  { 
+    title: "Data Visualization Techniques for Learning Analytics", 
+    url: "https://medium.com/@shashwat-mishra/data-viz-learning", 
+    author: "S. Mishra", 
+    year: "2024", 
+    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*research3.png",
+    publishedDate: new Date('2024-08-22'),
+    journal: "Educational Technology & Society",
+    status: 'published'
+  },
+].sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime()); // Sort by most recent
 
-const publications = [
+// Progress reports with recent dates
+const progressReportsStatic = [
   {
-    title: 'Efficient Attention Mechanisms for Large Language Models',
-    desc: 'ICML 2024 - Co-authored with Stanford AI Lab',
-    url: 'https://icml.cc/efficient-attention-2024'
+    title: 'Day 15 Progress Report - Dashboard Enhancement',
+    desc: 'Implemented activity heatmap, enhanced dashboard UI, and improved user experience with smooth animations.',
+    url: '/writing-records?tab=progress#day-15',
+    publishedDate: new Date('2025-01-26'),
+    category: 'Progress Report'
   },
   {
-    title: 'Multi-Modal Learning for Computer Vision Applications',
-    desc: 'CVPR 2023 - Presented at Computer Vision Conference',
-    url: 'https://cvpr2023.org/multimodal-learning'
+    title: 'Day 14 Progress Report - Chart Integration',
+    desc: 'Successfully integrated Chart.js with multiple chart types, fixed UI issues, and optimized performance.',
+    url: '/writing-records?tab=progress#day-14',
+    publishedDate: new Date('2025-01-25'),
+    category: 'Progress Report'
   },
   {
-    title: 'Scalable MLOps: A Comprehensive Framework',
-    desc: 'IEEE Transactions on AI - Impact Factor: 8.5',
-    url: 'https://ieeexplore.ieee.org/scalable-mlops-framework'
+    title: 'Day 13 Progress Report - Phase 2 Planning',
+    desc: 'Completed Phase 2 roadmap documentation, planned advanced features, and documented implementation strategies.',
+    url: '/writing-records?tab=progress#day-13',
+    publishedDate: new Date('2025-01-24'),
+    category: 'Progress Report'
   }
-];
+].sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime());
 
 const AboutSection: React.FC = () => {
   const skills = getStoredSkills();
@@ -300,10 +364,18 @@ const AboutSection: React.FC = () => {
     },
   };
 
-  // Only show 2 most recent for each
-  const recentProgress = progressReports.slice(0, 2);
-  const recentBlogs = blogs.slice(0, 2);
-  const recentPubs = publications.slice(0, 2);
+  // Only show 2 most recent for each category (automatically sorted by publishedDate)
+  const recentProgress = progressReportsStatic.slice(0, 2);
+  const recentBlogs = blogPosts.slice(0, 2).map(blog => ({
+    title: blog.title,
+    desc: `${blog.category} - ${blog.snippet}`,
+    url: blog.url
+  }));
+  const recentPubs = researchPublications.slice(0, 2).map(pub => ({
+    title: pub.title,
+    desc: `${pub.journal || pub.year} - ${pub.status || 'Published'}`,
+    url: pub.url
+  }));
 
   return (
     <section className="about-section" id="about">
