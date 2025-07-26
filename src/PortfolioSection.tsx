@@ -1,4 +1,6 @@
 import React from 'react';
+import logoSvg from './assets/logo.svg';
+import elderHubLogo from './assets/elderhub-logo.png';
 
 interface Project {
   id: number;
@@ -13,15 +15,23 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: "AI-Powered Chatbot",
-    description: "Developed an intelligent chatbot using transformer models and NLP techniques. Features include sentiment analysis, intent recognition, and multi-language support.",
-    tech: ["Python", "TensorFlow", "NLP", "FastAPI", "React"],
-    image: "🤖",
-    liveDemo: "https://chatbot-demo.com",
-    github: "https://github.com/shashwat/ai-chatbot"
+    title: "Personal Portfolio & Progress Tracker",
+    description: "Dynamic portfolio website with integrated progress tracking system, activity heatmap visualization, and comprehensive analytics dashboard. Features real-time content management and interactive data visualization.",
+    tech: ["React", "TypeScript", "Chart.js", "Vite", "CSS3"],
+    image: logoSvg,
+    liveDemo: "https://shashwat-portfolio.vercel.app",
+    github: "https://github.com/StrikerSam-Ai/Portfolio"
   },
   {
     id: 2,
+    title: "ElderHub - Senior Care Platform",
+    description: "Comprehensive healthcare platform designed for elderly care management. Features appointment scheduling, health monitoring, medication reminders, and family connectivity tools to enhance senior living experience.",
+    tech: ["React", "Node.js", "MongoDB", "Express", "Healthcare APIs","Groq AI"],
+    image: elderHubLogo,
+    github: "https://github.com/StrikerSam-Ai/Team-Elevate-HH2025"
+  },
+  {
+    id: 3,
     title: "Computer Vision System",
     description: "Built a real-time object detection system using YOLO and OpenCV. Processes video streams and provides accurate object recognition with 95%+ accuracy.",
     tech: ["Python", "OpenCV", "YOLO", "Docker", "AWS"],
@@ -30,7 +40,7 @@ const projects: Project[] = [
     github: "https://github.com/shashwat/computer-vision"
   },
   {
-    id: 3,
+    id: 4,
     title: "ML Model Pipeline",
     description: "End-to-end machine learning pipeline with automated training, model versioning, and deployment. Includes monitoring and A/B testing capabilities.",
     tech: ["Python", "MLflow", "Kubernetes", "Prometheus", "Grafana"],
@@ -38,7 +48,7 @@ const projects: Project[] = [
     github: "https://github.com/shashwat/ml-pipeline"
   },
   {
-    id: 4,
+    id: 5,
     title: "Recommendation Engine",
     description: "Personalized recommendation system using collaborative filtering and content-based approaches. Handles millions of user interactions with sub-second response times.",
     tech: ["Python", "Scikit-learn", "Redis", "PostgreSQL", "Flask"],
@@ -47,7 +57,7 @@ const projects: Project[] = [
     github: "https://github.com/shashwat/recommendation-engine"
   },
   {
-    id: 5,
+    id: 6,
     title: "Sentiment Analysis API",
     description: "RESTful API for real-time sentiment analysis of text data. Supports multiple languages and provides confidence scores with detailed analysis.",
     tech: ["Python", "BERT", "FastAPI", "Docker", "Nginx"],
@@ -56,7 +66,7 @@ const projects: Project[] = [
     github: "https://github.com/shashwat/sentiment-api"
   },
   {
-    id: 6,
+    id: 7,
     title: "Data Visualization Dashboard",
     description: "Interactive dashboard for visualizing complex ML model performance metrics and business insights. Real-time updates with WebSocket connections.",
     tech: ["React", "D3.js", "Python", "WebSocket", "MongoDB"],
@@ -74,7 +84,11 @@ const PortfolioSection: React.FC = () => {
         {projects.map((project) => (
           <div className="portfolio-card" key={project.id}>
             <div className="portfolio-thumb">
-              <span className="project-emoji">{project.image}</span>
+              {project.image.endsWith('.svg') || project.image.startsWith('/') || project.image.startsWith('http') ? (
+                <img src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              ) : (
+                <span className="project-emoji">{project.image}</span>
+              )}
             </div>
             <h3 className="portfolio-project-title">{project.title}</h3>
             <p className="portfolio-description">{project.description}</p>
