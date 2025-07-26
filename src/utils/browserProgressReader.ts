@@ -33,7 +33,7 @@ export interface ProgressStats {
 class BrowserProgressReader {
   private statsCache: ProgressStats | null = null;
 
-  // Sample progress report from your file to show the format
+  // Sample progress report from your actual file to show the format
   private sampleReports: ParsedProgressReport[] = [
     {
       day: 1,
@@ -45,12 +45,11 @@ class BrowserProgressReader {
       tags: ['#the_beginning', '#I_made_it', '#random_learning'],
       content: `# Day 1: Quick Entry
 
-**Date:** 2025-07-24 | **Mood:** {😊} | **Score:** 8/10
+**Date:** 2025-07-24 | **Mood:** 😊 | **Score:** 8/10
 
 ## ✅ Done Today
 - made progress report system
 - made a wonderful & unique dashboard
-- {achievement 3}
 
 ## 🚧 Challenges
 - health wise challenge(felt tired and low in energy)
@@ -63,7 +62,7 @@ class BrowserProgressReader {
 - more efficiency
 - academics and self learning progress
 
-**Tags:** \`#the_beginning\` \`{I_made_it}\` \`{random_learning}\``,
+**Tags:** \`#the_beginning\` \`#I_made_it\` \`#random_learning\``,
       filePath: '/progress-reports/2025/day-1-2025-07-24.md',
       achievements: [
         'made progress report system',
@@ -77,8 +76,44 @@ class BrowserProgressReader {
         'Aptitude and python'
       ]
     },
-    // Generate additional sample data for heatmap visualization
-    ...this.generateSampleHistoricalData()
+    {
+      day: 2,
+      date: '2025-07-25',
+      title: 'Day 2: Not a wonderful day',
+      mood: 'tough 😭',
+      productivityScore: 5,
+      focusAreas: ['project completion', 'course completion', 'self improvement'],
+      tags: ['#elderhub', '#portfolio', '#completion'],
+      content: `# Day 2: 25/7/2025 - Not a wonderful day
+
+## ✅ What I Accomplished
+- completely submitted elderhub repo on git
+- updated portfolio projects section
+- added dynamic content to about me section
+
+## 🧗 Challenges & Solutions
+- Project deadline pressure and debugging issues
+- Portfolio dynamic content integration
+
+## ⏰ Time Breakdown: 9 hours total
+- 💻 Coding: 3 hours
+- 🐛 Debugging: 2 hours
+- 📖 Learning: 1 hour`,
+      filePath: '/progress-reports/2025/day-2-2025-07-25.md',
+      achievements: [
+        'completely submitted elderhub repo on git',
+        'updated portfolio projects section',
+        'added dynamic content to about me section'
+      ],
+      challenges: [
+        'Project deadline pressure and debugging issues',
+        'Portfolio dynamic content integration'
+      ],
+      learnings: [
+        'Portfolio dynamic content management',
+        'Project deployment and submission processes'
+      ]
+    }
   ];
 
   async getRecentReports(limit: number = 10): Promise<ParsedProgressReport[]> {
@@ -209,52 +244,6 @@ class BrowserProgressReader {
       .map(([tag, count]) => ({ tag, count }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 10);
-  }
-
-  // Generate sample historical data for demonstration
-  private generateSampleHistoricalData(): ParsedProgressReport[] {
-    const sampleData: ParsedProgressReport[] = [];
-    const today = new Date('2025-07-24');
-    const moods = ['😊', '😌', '😐', '😓', '🎉'];
-    const achievements = [
-      'Completed code review',
-      'Fixed critical bug',
-      'Learning new framework',
-      'Improved documentation',
-      'Optimized performance',
-      'Team collaboration',
-      'Research session',
-      'Prototype development'
-    ];
-    
-    // Generate last 60 days of sample data
-    for (let i = 1; i <= 60; i++) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      
-      // Skip some days randomly to show realistic pattern
-      if (Math.random() < 0.3) continue; // 30% chance of no activity
-      
-      const score = Math.floor(Math.random() * 8) + 3; // 3-10 range
-      const numAchievements = Math.floor(Math.random() * 4) + 1; // 1-4 achievements
-      
-      sampleData.push({
-        day: i + 1,
-        date: date.toISOString().split('T')[0],
-        title: `Day ${i + 1}: Progress Entry`,
-        mood: moods[Math.floor(Math.random() * moods.length)],
-        productivityScore: score,
-        focusAreas: ['coding', 'learning', 'improvement'].slice(0, Math.floor(Math.random() * 3) + 1),
-        tags: [`#day${i + 1}`, '#progress', '#learning'].slice(0, Math.floor(Math.random() * 3) + 1),
-        content: `Sample content for day ${i + 1}`,
-        filePath: `/progress-reports/2025/day-${i + 1}.md`,
-        achievements: achievements.slice(0, numAchievements),
-        challenges: Math.random() > 0.7 ? ['Time management', 'Complex problem'] : [],
-        learnings: ['New concept', 'Best practice'].slice(0, Math.floor(Math.random() * 2) + 1)
-      });
-    }
-    
-    return sampleData.reverse(); // Most recent first
   }
 
   // Method to add new reports (for future expansion)
