@@ -48,9 +48,9 @@ const blogPosts = [
   },
   { 
     title: "Pushovers Finish Last — Learn to Say No", 
-    url: "https://medium.com/@shashwat-mishra/pushovers-finish-last-learn-to-say-no", 
+    url: "https://medium.com/@shashwatmishra0369/pushovers-finish-last-learn-to-say-no-79bb882a8801", 
     snippet: "Why saying no is a superpower for your career and life.", 
-    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example2.png",
+    image: "https://miro.medium.com/v2/resize:fit:1100/format:webp/0*wCIOsoK3MY3o49iU",
     publishedDate: new Date('2025-07-18'),
     category: 'Career'
   },
