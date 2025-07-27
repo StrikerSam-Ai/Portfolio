@@ -36,6 +36,12 @@ class BrowserProgressReader {
   private cacheTimestamp: number = 0;
   private readonly CACHE_DURATION = 30 * 1000; // 30 seconds
 
+  // Get the correct base path for fetching files
+  private getBasePath(): string {
+    // Use Vite's BASE_URL which will be '/Portfolio/' in production and '/' in development
+    return import.meta.env.BASE_URL.replace(/\/$/, ''); // Remove trailing slash
+  }
+
   async getRecentReports(limit: number = 10): Promise<ParsedProgressReport[]> {
     const allReports = await this.scanProgressReportsFromFolder();
     return allReports.slice(0, limit);
@@ -70,7 +76,8 @@ class BrowserProgressReader {
     for (const { filename, day, date } of knownFiles) {
       try {
         console.log(`🔍 Fetching: ${filename}`);
-        const response = await fetch(`/progress-reports/2025/${filename}?t=${Date.now()}`);
+        const basePath = this.getBasePath();
+        const response = await fetch(`${basePath}/progress-reports/2025/${filename}?t=${Date.now()}`);
         
         if (response.ok) {
           const content = await response.text();
@@ -179,6 +186,8 @@ class BrowserProgressReader {
       console.log(`✅ Successfully parsed Day ${day}: ${title}, Mood: ${mood}, Score: ${productivityScore}`);
       console.log(`   Achievements: ${achievements.length}, Learnings: ${learnings.length}, Challenges: ${challenges.length}`);
       
+      const basePath = this.getBasePath();
+      
       return {
         day,
         date,
@@ -188,7 +197,7 @@ class BrowserProgressReader {
         focusAreas: undefined, // Your template doesn't have this
         tags: tags.length > 0 ? tags : undefined,
         content,
-        filePath: `/progress-reports/2025/${filename}`,
+        filePath: `${basePath}/progress-reports/2025/${filename}`,
         achievements: achievements.length > 0 ? achievements : undefined,
         challenges: challenges.length > 0 ? challenges : undefined,
         learnings: learnings.length > 0 ? learnings : undefined
