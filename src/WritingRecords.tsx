@@ -235,37 +235,37 @@ const WritingRecords: React.FC = () => {
   };
 
   const generateProductivityTrendData = () => {
-    if (!fileReports || fileReports.length < 2) return null;
-    
-    const last14Days = fileReports
-      .slice(0, 14)
-      .reverse()
-      .map(report => ({
-        date: new Date(report.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-        score: report.productivityScore || 0,
-        mood: report.mood || 'good'
-      }));
+  if (!fileReports || fileReports.length === 0) return null;
+  
+  // Use actual reports instead of fake 14 days
+  const actualReports = fileReports
+    .sort((a, b) => a.day - b.day) // Sort by day ascending
+    .map(report => ({
+      date: new Date(report.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+      score: report.productivityScore || 0,
+      mood: report.mood || 'good'
+    }));
 
-    return {
-      labels: last14Days.map(d => d.date),
-      datasets: [
-        {
-          label: 'Productivity Score',
-          data: last14Days.map(d => d.score),
-          borderColor: '#ffb347',
-          backgroundColor: 'rgba(255, 179, 71, 0.1)',
-          borderWidth: 3,
-          pointBackgroundColor: last14Days.map(d => getMoodColorFromText(d.mood)),
-          pointBorderColor: '#ffb347',
-          pointBorderWidth: 2,
-          pointRadius: 6,
-          pointHoverRadius: 8,
-          fill: true,
-          tension: 0.4
-        }
-      ]
-    };
+  return {
+    labels: actualReports.map(d => d.date),
+    datasets: [
+      {
+        label: 'Productivity Score',
+        data: actualReports.map(d => d.score),
+        borderColor: '#ffb347',
+        backgroundColor: 'rgba(255, 179, 71, 0.1)',
+        borderWidth: 3,
+        pointBackgroundColor: actualReports.map(d => getMoodColorFromText(d.mood)),
+        pointBorderColor: '#ffb347',
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        fill: true,
+        tension: 0.4,
+      }
+    ]
   };
+};
 
   const generateMoodRadarData = () => {
     if (!progressStats?.moodDistribution) return null;
@@ -351,7 +351,7 @@ const WritingRecords: React.FC = () => {
     const productivityScores = fileReports?.map(r => r.productivityScore || 0) || [];
     const productivityTrend = calculateTrend(productivityScores);
     const streak = progressStats?.currentStreak || 0;
-    const longestStreak = Math.max(streak, streak + 5); // Placeholder for longest streak
+    const longestStreak = streak; // For now, same as current streak since you just started
     const achievementVelocity = (progressStats?.totalDays || 0) > 0 
       ? ((progressStats?.totalAchievements || 0) / (progressStats?.totalDays || 1)).toFixed(1)
       : '0.0';
