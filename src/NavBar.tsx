@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import './App.css';
 import { Link } from 'react-router-dom';
+import logoSvg from './assets/logo.svg';
 
 const navItems = [
   { id: 'hero', label: 'Home' },
@@ -24,7 +26,7 @@ const NavBar: React.FC = () => {
   return (
     <nav className={`navbar${open ? ' open' : ''}`}>
       <div className="navbar-logo">
-        <img src="/logo.svg" alt="Shashwat Mishra" className="logo-image" />
+        <img src={logoSvg} alt="Shashwat Mishra" className="logo-image" />
       </div>
       <div className="navbar-spacer" />
       

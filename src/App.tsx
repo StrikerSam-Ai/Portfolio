@@ -9,6 +9,8 @@ import Footer from './Footer'
 import { useState, useEffect } from 'react'
 import WritingRecords from './WritingRecords';
 import { Routes, Route } from 'react-router-dom';
+import logoSvg from './assets/logo.svg';
+import portraitPng from './assets/portrait.png';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +36,7 @@ function App() {
       <div className="loading-screen">
         <div className="loading-content">
           <div className="loading-logo">
-            <img src="/logo.svg" alt="Shashwat Mishra" className="loading-logo-image" />
+            <img src={logoSvg} alt="Shashwat Mishra" className="loading-logo-image" />
           </div>
           <div className="loading-text">Shashwat Mishra</div>
           <div className="loading-spinner"></div>
@@ -61,7 +63,7 @@ function App() {
             <NavBar />
             <section className="hero-section hero-flex" id="hero">
               <div className="hero-portrait-wrapper">
-                <img src="/src/assets/portrait.png" alt="Shashwat Mishra Portrait" className="hero-portrait-gradient" />
+                <img src={portraitPng} alt="Shashwat Mishra Portrait" className="hero-portrait-gradient" />
               </div>
               <div className="hero-content">
                 <h1 className="hero-name">Shashwat Mishra</h1>
