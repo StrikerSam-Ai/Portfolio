@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Radar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -7,10 +7,12 @@ import {
   LineElement,
   Filler,
   Tooltip,
-  Legend
+  Legend,
 } from 'chart.js';
-import type { Chart, ChartArea } from 'chart.js';
+import type { ChartArea } from 'chart.js';
 import { Link } from 'react-router-dom';
+import { browserProgressReader, type ParsedProgressReport } from './utils/browserProgressReader';
+
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
@@ -96,67 +98,40 @@ const blogPosts = [
 
 const researchPublications = [
   { 
-    title: "AI-Driven Progress Tracking Systems: A Modern Approach", 
-    url: "https://medium.com/@shashwat-mishra/ai-progress-tracking", 
-    author: "S. Mishra", 
-    year: "2025", 
-    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*research1.png",
-    publishedDate: new Date('2025-07-15'),
-    journal: "Tech Innovation Journal",
-    status: 'published'
-  },
-  { 
-    title: "Gamification in Personal Development: Psychological Impact", 
-    url: "https://medium.com/@shashwat-mishra/gamification-research", 
-    author: "S. Mishra", 
+    title: "Research Publications Coming Soon", 
+    url: "#", 
+    author: "", 
     year: "2024", 
-    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*research2.png",
-    publishedDate: new Date('2024-12-10'),
-    journal: "Behavioral Psychology Review",
-    status: 'published'
-  },
-  { 
-    title: "Data Visualization Techniques for Learning Analytics", 
-    url: "https://medium.com/@shashwat-mishra/data-viz-learning", 
-    author: "S. Mishra", 
-    year: "2024", 
-    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*research3.png",
-    publishedDate: new Date('2024-08-22'),
-    journal: "Educational Technology & Society",
-    status: 'published'
-  },
-].sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime()); // Sort by most recent
-
-// Progress reports with recent dates
-const progressReportsStatic = [
-  {
-    title: 'Day 15 Progress Report - Dashboard Enhancement',
-    desc: 'Implemented activity heatmap, enhanced dashboard UI, and improved user experience with smooth animations.',
-    url: '/writing-records?tab=progress#day-15',
-    publishedDate: new Date('2025-01-26'),
-    category: 'Progress Report'
-  },
-  {
-    title: 'Day 14 Progress Report - Chart Integration',
-    desc: 'Successfully integrated Chart.js with multiple chart types, fixed UI issues, and optimized performance.',
-    url: '/writing-records?tab=progress#day-14',
-    publishedDate: new Date('2025-01-25'),
-    category: 'Progress Report'
-  },
-  {
-    title: 'Day 13 Progress Report - Phase 2 Planning',
-    desc: 'Completed Phase 2 roadmap documentation, planned advanced features, and documented implementation strategies.',
-    url: '/writing-records?tab=progress#day-13',
-    publishedDate: new Date('2025-01-24'),
-    category: 'Progress Report'
+    image: "",
+    publishedDate: new Date(),
+    journal: "Stay tuned for upcoming research publications",
+    status: 'coming soon'
   }
-].sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime());
+].sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime()); // Sorting preserved for future additions
 
 const AboutSection: React.FC = () => {
+  const [recentProgress, setRecentProgress] = useState<ParsedProgressReport[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const skills = getStoredSkills();
   const editValues = skills.map((s: Skill) => s.value);
   const editLabels = skills.map((s: Skill) => s.label);
   const chartRef = useRef<any>(null);
+
+  useEffect(() => {
+    const fetchProgress = async () => {
+      setIsLoading(true);
+      try {
+        const reports = await browserProgressReader.getRecentReports(3);
+        console.log('Fetched reports in AboutSection:', reports);
+        setRecentProgress(reports);
+      } catch (error) {
+        console.error("Failed to load progress reports:", error);
+        setRecentProgress([]); // Clear progress on error
+      }
+      setIsLoading(false);
+    };
+    fetchProgress();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('skills', JSON.stringify(skills));
@@ -281,7 +256,7 @@ const AboutSection: React.FC = () => {
   }, [skills, editLabels]);
 
   // Gradient fill for radar
-  const getGradient = (ctx: { chart: Chart<'radar'> & { ctx: CanvasRenderingContext2D; chartArea?: ChartArea } }) => {
+  const getGradient = (ctx: { chart: ChartJS<'radar'> & { ctx: CanvasRenderingContext2D; chartArea?: ChartArea } }) => {
     const chart = ctx.chart;
     const { ctx: c, chartArea } = chart;
     if (!chartArea) return '#ffb347';
@@ -365,7 +340,6 @@ const AboutSection: React.FC = () => {
   };
 
   // Only show 2 most recent for each category (automatically sorted by publishedDate)
-  const recentProgress = progressReportsStatic.slice(0, 2);
   const recentBlogs = blogPosts.slice(0, 2).map(blog => ({
     title: blog.title,
     desc: `${blog.category} - ${blog.snippet}`,
@@ -457,13 +431,21 @@ const AboutSection: React.FC = () => {
         <div className="about-progress">{/* grid-area: progress */}
           <h3>📈 Recent Progress Reports</h3>
           <ul>
-            {recentProgress.map((pr, i) => (
-              <li key={i}>
-                <strong>{pr.title}</strong>
-                <br />
-                <span className="timeline-detail">{pr.desc}</span>
-              </li>
-            ))}
+            {isLoading ? (
+              <li>Loading...</li>
+            ) : (
+              recentProgress.map((pr, i) => (
+                <li key={i}>
+                  <strong>{pr.title}</strong>
+                  <br />
+                  <span className="timeline-detail">
+                    Day {pr.day} - {pr.date} | Mood: {pr.mood} 
+                    {pr.productivityScore && ` | Score: ${pr.productivityScore}/10`}
+                    {pr.achievements && pr.achievements.length > 0 && ` | ${pr.achievements.length} achievements`}
+                  </span>
+                </li>
+              ))
+            )}
           </ul>
           <Link to="/writing-records?tab=progress" className="about-viewall-btn">View All Progress Reports</Link>
         </div>
@@ -485,4 +467,4 @@ const AboutSection: React.FC = () => {
   );
 };
 
-export default AboutSection; 
+export default AboutSection;
