@@ -32,142 +32,265 @@ export interface ProgressStats {
 
 class BrowserProgressReader {
   private statsCache: ProgressStats | null = null;
-
-  // Sample progress report from your actual file to show the format
-  private sampleReports: ParsedProgressReport[] = [
-    {
-      day: 1,
-      date: '2025-07-24',
-      title: 'Day 1: Quick Entry',
-      mood: '😊',
-      productivityScore: 8,
-      focusAreas: ['progress system', 'dashboard', 'learning'],
-      tags: ['#the_beginning', '#I_made_it', '#random_learning'],
-      content: `# Day 1: Quick Entry
-
-**Date:** 2025-07-24 | **Mood:** 😊 | **Score:** 8/10
-
-## ✅ Done Today
-- made progress report system
-- made a wonderful & unique dashboard
-
-## 🚧 Challenges
-- health wise challenge(felt tired and low in energy)
-
-## 💡 Learned
-- AI vs AGI
-- Aptitude and python
-
-## 🎯 Tomorrow
-- more efficiency
-- academics and self learning progress
-
-**Tags:** \`#the_beginning\` \`#I_made_it\` \`#random_learning\``,
-      filePath: '/progress-reports/2025/day-1-2025-07-24.md',
-      achievements: [
-        'made progress report system',
-        'made a wonderful & unique dashboard'
-      ],
-      challenges: [
-        'health wise challenge(felt tired and low in energy)'
-      ],
-      learnings: [
-        'AI vs AGI',
-        'Aptitude and python'
-      ]
-    },
-    {
-      day: 2,
-      date: '2025-07-25',
-      title: 'Day 2: Not a wonderful day',
-      mood: 'tough 😭',
-      productivityScore: 5,
-      focusAreas: ['project completion', 'course completion', 'self improvement'],
-      tags: ['#elderhub', '#portfolio', '#completion'],
-      content: `# Day 2: 25/7/2025 - Not a wonderful day
-
-## ✅ What I Accomplished
-- completely submitted elderhub repo on git
-- updated portfolio projects section
-- added dynamic content to about me section
-
-## 🧗 Challenges & Solutions
-- Project deadline pressure and debugging issues
-- Portfolio dynamic content integration
-
-## ⏰ Time Breakdown: 9 hours total
-- 💻 Coding: 3 hours
-- 🐛 Debugging: 2 hours
-- 📖 Learning: 1 hour`,
-      filePath: '/progress-reports/2025/day-2-2025-07-25.md',
-      achievements: [
-        'completely submitted elderhub repo on git',
-        'updated portfolio projects section',
-        'added dynamic content to about me section'
-      ],
-      challenges: [
-        'Project deadline pressure and debugging issues',
-        'Portfolio dynamic content integration'
-      ],
-      learnings: [
-        'Portfolio dynamic content management',
-        'Project deployment and submission processes'
-      ]
-    }
-  ];
+  private reportsCache: ParsedProgressReport[] | null = null;
+  private cacheTimestamp: number = 0;
+  private readonly CACHE_DURATION = 30 * 1000; // 30 seconds
 
   async getRecentReports(limit: number = 10): Promise<ParsedProgressReport[]> {
-    // In a real implementation, this would fetch from your progress-reports folder
-    // For now, we'll use the sample data
-    return this.sampleReports.slice(0, limit);
+    const allReports = await this.scanProgressReportsFromFolder();
+    return allReports.slice(0, limit);
   }
 
   async getAllReports(): Promise<ParsedProgressReport[]> {
-    return this.sampleReports;
+    return await this.scanProgressReportsFromFolder();
+  }
+
+  // Scan the progress-reports/2025 folder for actual report files
+    async scanProgressReportsFromFolder(): Promise<ParsedProgressReport[]> {
+  // Check cache first
+  const now = Date.now();
+  if (this.reportsCache && (now - this.cacheTimestamp) < this.CACHE_DURATION) {
+    console.log('Using cached reports');
+    return this.reportsCache;
+  }
+
+  console.log('🔄 Scanning for progress reports...');
+  
+  try {
+    const reports: ParsedProgressReport[] = [];
+    
+    // Test exact files we know exist
+    const knownFiles = [
+      { filename: 'day-1-2025-07-24.md', day: 1, date: '2025-07-24' },
+      { filename: 'day-2-2025-07-25.md', day: 2, date: '2025-07-25' },
+      { filename: 'day-003-2025-07-26.md', day: 3, date: '2025-07-26' },
+      { filename: 'day-004-2025-07-27.md', day: 4, date: '2025-07-27' }
+    ];
+    
+    for (const { filename, day, date } of knownFiles) {
+      try {
+        console.log(`🔍 Fetching: ${filename}`);
+        const response = await fetch(`/progress-reports/2025/${filename}?t=${Date.now()}`);
+        
+        if (response.ok) {
+          const content = await response.text();
+          console.log(`✅ Got content (${content.length} chars) for ${filename}`);
+          
+          const parsed = this.parseMarkdownReport(content, filename, day, date);
+          if (parsed) {
+            console.log(`✅ Parsed successfully: ${parsed.title}`);
+            reports.push(parsed);
+          } else {
+            console.log(`❌ Failed to parse ${filename}`);
+          }
+        } else {
+          console.log(`❌ HTTP ${response.status} for ${filename}`);
+        }
+      } catch (error) {
+        console.log(`❌ Error fetching ${filename}:`, error);
+      }
+    }
+
+    console.log(`📊 Final result: ${reports.length} reports found`);
+    reports.forEach(r => console.log(`  - Day ${r.day}: ${r.title} (${r.mood}, ${r.productivityScore}/10)`));
+    
+    const sortedReports = reports.sort((a, b) => b.day - a.day);
+    
+    // Cache the results
+    this.reportsCache = sortedReports;
+    this.cacheTimestamp = now;
+    
+    return sortedReports;
+    
+  } catch (error) {
+    console.warn('❌ Scan failed:', error);
+    return [];
+  }
+}
+
+  private parseMarkdownReport(content: string, filename: string, day: number, date: string): ParsedProgressReport | null {
+    try {
+      console.log(`Parsing content for ${filename}...`);
+      
+      // Extract title from first heading
+      const titleMatch = content.match(/^#\s+(.+)/m);
+      const title = titleMatch ? titleMatch[1] : `Day ${day}`;
+
+      // Extract mood - look for **Mood:** pattern specifically
+      const moodMatch = content.match(/\*\*Mood:\*\*\s*([^\s|]+)/);
+      const mood = moodMatch ? moodMatch[1] : '😊';
+
+      // Extract score - look for **Score:** pattern specifically
+      const scoreMatch = content.match(/\*\*Score:\*\*\s*(\d+)(?:\/10|\/100)?/);
+      const productivityScore = scoreMatch ? parseInt(scoreMatch[1]) : undefined;
+
+      // Extract tags - look for `#tag` format in your files
+      const tagMatches = content.match(/`#[\w_]+`/g);
+      const tags = tagMatches ? tagMatches.map(tag => tag.replace(/`/g, '')) : [];
+
+      // Extract achievements from "## ✅ Done Today" section
+      const achievements: string[] = [];
+      const achievementMatch = content.match(/## ✅ Done Today([\s\S]*?)(?=##|$)/);
+      if (achievementMatch) {
+        const achievementText = achievementMatch[1];
+        const items = achievementText.match(/- (.+)/g);
+        if (items) {
+          items.forEach(item => {
+            const cleaned = item.replace(/^- /, '').trim();
+            if (cleaned) {
+              achievements.push(cleaned);
+            }
+          });
+        }
+      }
+
+      // Extract learnings from "## 💡 Learned" section
+      const learnings: string[] = [];
+      const learningMatch = content.match(/## 💡 Learned([\s\S]*?)(?=##|$)/);
+      if (learningMatch) {
+        const learningText = learningMatch[1];
+        const items = learningText.match(/- (.+)/g);
+        if (items) {
+          items.forEach(item => {
+            const cleaned = item.replace(/^- /, '').trim();
+            if (cleaned) {
+              learnings.push(cleaned);
+            }
+          });
+        }
+      }
+
+      // Extract challenges from "## 🚧 Challenges" section
+      const challenges: string[] = [];
+      const challengeMatch = content.match(/## 🚧 Challenges([\s\S]*?)(?=##|$)/);
+      if (challengeMatch) {
+        const challengeText = challengeMatch[1];
+        const items = challengeText.match(/- (.+)/g);
+        if (items) {
+          items.forEach(item => {
+            const cleaned = item.replace(/^- /, '').trim();
+            if (cleaned) {
+              challenges.push(cleaned);
+            }
+          });
+        }
+      }
+
+      console.log(`✅ Successfully parsed Day ${day}: ${title}, Mood: ${mood}, Score: ${productivityScore}`);
+      console.log(`   Achievements: ${achievements.length}, Learnings: ${learnings.length}, Challenges: ${challenges.length}`);
+      
+      return {
+        day,
+        date,
+        title,
+        mood,
+        productivityScore,
+        focusAreas: undefined, // Your template doesn't have this
+        tags: tags.length > 0 ? tags : undefined,
+        content,
+        filePath: `/progress-reports/2025/${filename}`,
+        achievements: achievements.length > 0 ? achievements : undefined,
+        challenges: challenges.length > 0 ? challenges : undefined,
+        learnings: learnings.length > 0 ? learnings : undefined
+      };
+    } catch (error) {
+      console.warn(`Failed to parse report ${filename}:`, error);
+      return null;
+    }
   }
 
   async getStats(): Promise<ProgressStats> {
-    if (this.statsCache) {
-      return this.statsCache;
-    }
-
-    const reports = await this.getAllReports();
-    
-    const stats: ProgressStats = {
-      totalDays: reports.length,
-      averageScore: reports.reduce((acc, r) => acc + (r.productivityScore || 0), 0) / reports.length,
-      streak: this.calculateStreak(reports),
-      totalAchievements: reports.reduce((acc, r) => acc + (r.achievements?.length || 0), 0),
-      mostCommonMood: this.getMostCommonMood(reports),
-      improvementTrend: this.calculateTrend(reports),
-      moodDistribution: this.getMoodDistribution(reports),
-      weeklyScores: this.getWeeklyScores(reports),
-      focusAreas: this.getFocusAreas(reports),
-      latestReport: reports[0], // Most recent report
-      topTags: this.getTopTags(reports),
-      currentStreak: this.calculateStreak(reports), // Same as streak for now
-      averageProductivity: parseFloat((reports.reduce((acc, r) => acc + (r.productivityScore || 0), 0) / reports.length).toFixed(1))
-    };
-
-    this.statsCache = stats;
-    return stats;
+  if (this.statsCache) {
+    return this.statsCache;
   }
 
-  private calculateStreak(reports: ParsedProgressReport[]): number {
-    // Simple streak calculation - consecutive days with reports
-    return reports.length; // For now, all days count as streak
+  const reports = await this.getAllReports();
+  
+  const stats: ProgressStats = {
+    totalDays: reports.length,
+    averageScore: reports.reduce((acc, r) => acc + (r.productivityScore || 0), 0) / reports.length || 0,
+    streak: this.calculateStreak(reports),
+    totalAchievements: reports.reduce((acc, r) => acc + (r.achievements?.length || 0), 0),
+    mostCommonMood: this.getMostCommonMood(reports),
+    improvementTrend: this.calculateTrend(reports),
+    moodDistribution: this.getMoodDistribution(reports),
+    weeklyScores: this.getWeeklyScores(reports),
+    focusAreas: this.getFocusAreas(reports),
+    latestReport: reports[0], // Most recent report
+    topTags: this.getTopTags(reports),
+    currentStreak: this.calculateStreak(reports), // Same as streak
+    averageProductivity: parseFloat((reports.reduce((acc, r) => acc + (r.productivityScore || 0), 0) / reports.length || 0).toFixed(1))
+  };
+
+  // Clear stats cache every 30 seconds
+  setTimeout(() => {
+    this.statsCache = null;
+  }, 30000);
+
+  this.statsCache = stats;
+  return stats;
+}
+
+      private calculateStreak(reports: ParsedProgressReport[]): number {
+    if (reports.length === 0) return 0;
+    
+    // Sort reports by day number in descending order (most recent first)
+    const sortedReports = reports.sort((a, b) => b.day - a.day);
+    
+    // Calculate current streak from the most recent day backwards
+    const startDate = new Date('2025-07-24T00:00:00');
+    const today = new Date();
+    
+    // Set to start of day to avoid timezone issues
+    const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const startDateStart = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    
+    const diffTime = todayStart.getTime() - startDateStart.getTime();
+    const currentDay = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    
+    let streak = 0;
+    
+    // Check if we have a report for today (current day)
+    const hasToday = sortedReports.some(report => report.day === currentDay);
+    if (!hasToday) {
+      console.log(`📊 No report for today (day ${currentDay}), streak = 0`);
+      return 0; // No streak if we don't have today's report
+    }
+    
+    // Count consecutive days backwards from current day
+    for (let day = currentDay; day >= 1; day--) {
+      const hasReport = sortedReports.some(report => report.day === day);
+      if (hasReport) {
+        streak++;
+      } else {
+        break; // Break the streak if we find a missing day
+      }
+    }
+    
+    console.log(`📊 Streak calculation: Current day ${currentDay}, Reports: ${reports.length}, Streak: ${streak}`);
+    return streak;
   }
 
   private getMostCommonMood(reports: ParsedProgressReport[]): string {
     const moodCounts: Record<string, number> = {};
-    reports.forEach(r => {
-      if (r.mood) {
-        moodCounts[r.mood] = (moodCounts[r.mood] || 0) + 1;
+    
+    reports.forEach(report => {
+      if (report.mood) {
+        moodCounts[report.mood] = (moodCounts[report.mood] || 0) + 1;
       }
     });
+
+    let mostCommon = '😊';
+    let maxCount = 0;
     
-    return Object.entries(moodCounts)
-      .sort(([,a], [,b]) => b - a)[0]?.[0] || '😊';
+    Object.entries(moodCounts).forEach(([mood, count]) => {
+      if (count > maxCount) {
+        maxCount = count;
+        mostCommon = mood;
+      }
+    });
+
+    return mostCommon;
   }
 
   private calculateTrend(reports: ParsedProgressReport[]): 'up' | 'down' | 'stable' {
@@ -185,27 +308,25 @@ class BrowserProgressReader {
   }
 
   private getMoodDistribution(reports: ParsedProgressReport[]): Record<string, number> {
-    const distribution: Record<string, number> = {
-      'excellent': 0,
-      'good': 0,
-      'okay': 0,
-      'challenging': 0,
-      'tough': 0
+    const distribution = {
+      excellent: 0,
+      good: 0,
+      okay: 0,
+      challenging: 0
     };
 
     reports.forEach(report => {
       if (report.mood) {
-        // Map emoji moods to categories
-        if (report.mood.includes('😊') || report.mood.includes('😄') || report.mood.includes('🎉')) {
+        if (report.mood.includes('🔥') || report.mood.includes('🌟') || report.mood.includes('💪') || report.mood.includes('excellent')) {
           distribution.excellent++;
-        } else if (report.mood.includes('😌') || report.mood.includes('👍') || report.mood.includes('✨')) {
+        } else if (report.mood.includes('😌') || report.mood.includes('👍') || report.mood.includes('✨') || report.mood.includes('😊')) {
           distribution.good++;
         } else if (report.mood.includes('😐') || report.mood.includes('🤔') || report.mood.includes('💭')) {
           distribution.okay++;
-        } else if (report.mood.includes('😓') || report.mood.includes('😰') || report.mood.includes('⚡')) {
+        } else if (report.mood.includes('😓') || report.mood.includes('😰') || report.mood.includes('⚡') || report.mood.includes('tough')) {
           distribution.challenging++;
         } else {
-          distribution.good++; // Default fallback
+          distribution.good++;
         }
       }
     });
@@ -214,7 +335,6 @@ class BrowserProgressReader {
   }
 
   private getWeeklyScores(reports: ParsedProgressReport[]): number[] {
-    // For now, return last 7 days of scores
     return reports.slice(0, 7).map(r => r.productivityScore || 0).reverse();
   }
 
@@ -246,11 +366,12 @@ class BrowserProgressReader {
       .slice(0, 10);
   }
 
-  // Method to add new reports (for future expansion)
-  async addReport(report: ParsedProgressReport): Promise<void> {
-    this.sampleReports.unshift(report);
-    this.statsCache = null; // Invalidate cache
+  async addReport(): Promise<void> {
+    this.reportsCache = null;
+    this.statsCache = null;
+    this.cacheTimestamp = 0;
   }
 }
+ 
 
 export const browserProgressReader = new BrowserProgressReader();
