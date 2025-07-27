@@ -98,36 +98,16 @@ const blogPosts = [
 
 const researchPublications = [
   { 
-    title: "AI-Driven Progress Tracking Systems: A Modern Approach", 
-    url: "https://medium.com/@shashwat-mishra/ai-progress-tracking", 
-    author: "S. Mishra", 
+    title: "Research Publications Coming Soon", 
+    url: "#",
+    author: "Future Work", 
     year: "2025", 
-    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*research1.png",
-    publishedDate: new Date('2025-07-15'),
-    journal: "Tech Innovation Journal",
-    status: 'published'
-  },
-  { 
-    title: "Gamification in Personal Development: Psychological Impact", 
-    url: "https://medium.com/@shashwat-mishra/gamification-research", 
-    author: "S. Mishra", 
-    year: "2024", 
-    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*research2.png",
-    publishedDate: new Date('2024-12-10'),
-    journal: "Behavioral Psychology Review",
-    status: 'published'
-  },
-  { 
-    title: "Data Visualization Techniques for Learning Analytics", 
-    url: "https://medium.com/@shashwat-mishra/data-viz-learning", 
-    author: "S. Mishra", 
-    year: "2024", 
-    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*research3.png",
-    publishedDate: new Date('2024-08-22'),
-    journal: "Educational Technology & Society",
-    status: 'published'
-  },
-].sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime()); // Sort by most recent
+    image: "https://via.placeholder.com/300x200?text=Coming+Soon",
+    publishedDate: new Date(),
+    journal: "Stay Tuned",
+    status: 'upcoming'
+  }
+];
 
 const TABS = [
   { key: 'blog', label: 'Blog Posts' },
