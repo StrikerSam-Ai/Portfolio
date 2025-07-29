@@ -70,7 +70,8 @@ class BrowserProgressReader {
       { filename: 'day-1-2025-07-24.md', day: 1, date: '2025-07-24' },
       { filename: 'day-2-2025-07-25.md', day: 2, date: '2025-07-25' },
       { filename: 'day-003-2025-07-26.md', day: 3, date: '2025-07-26' },
-      { filename: 'day-004-2025-07-27.md', day: 4, date: '2025-07-27' }
+      { filename: 'day-004-2025-07-27.md', day: 4, date: '2025-07-27' },
+      { filename: 'day-006-2025-07-29.md', day: 6, date: '2025-07-29' } // New file added
     ];
     
     for (const { filename, day, date } of knownFiles) {
