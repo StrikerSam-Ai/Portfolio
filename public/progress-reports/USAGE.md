@@ -4,19 +4,21 @@ Your daily progress tracking system is ready! Here's how to use it:
 
 ## 🚀 Creating Reports
 
+> **Important**: All npm commands should be run from the project root directory (where package.json is located)
+
 ### Method 1: NPM Scripts (Recommended)
 ```bash
 # Create today's detailed report
-npm run new-report
+npm run report
 
 # Create today's quick report (2-3 minutes)
-npm run quick-report
+npm run report:quick
 ```
 
 ### Method 2: Direct Script
 ```bash
 # Navigate to progress-reports folder
-cd progress-reports
+cd public/progress-reports
 
 # Create detailed report
 node generate-report.js
@@ -28,7 +30,7 @@ node generate-report.js quick
 ### Method 3: PowerShell (Windows)
 ```powershell
 # Navigate to progress-reports folder
-cd progress-reports
+cd public/progress-reports
 
 # Create detailed report
 .\new-report.ps1
@@ -41,7 +43,7 @@ cd progress-reports
 
 ### Morning (2 minutes)
 ```bash
-npm run quick-report
+npm run report:quick
 ```
 - Fill in your goals for the day
 - Set mood and focus areas
@@ -49,7 +51,7 @@ npm run quick-report
 
 ### Evening (5-10 minutes)
 ```bash
-npm run new-report
+npm run report
 ```
 - If quick report exists, it opens that
 - If not, creates detailed template
@@ -60,10 +62,10 @@ npm run new-report
 
 Your reports are saved as:
 ```
-progress-reports/
+public/progress-reports/
 └── 2025/
-    ├── day-571-2025-07-24.md    ← Today's report
-    ├── day-572-2025-07-25.md    ← Tomorrow's report
+    ├── day-001-2025-07-24.md    ← Example report
+    ├── day-002-2025-07-25.md    ← Example report
     └── ...
 ```
 
@@ -122,4 +124,4 @@ Edit the filename generation in `generate-report.js`
 
 ---
 
-**Ready to start tracking? Run `npm run quick-report` now! 🚀**
+**Ready to start tracking? Run `npm run report:quick` now! 🚀**
