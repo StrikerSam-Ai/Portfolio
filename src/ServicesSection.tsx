@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRocket } from '@fortawesome/free-solid-svg-icons';
 
 const ServicesSection: React.FC = () => {
   return (
@@ -6,7 +8,7 @@ const ServicesSection: React.FC = () => {
       <h2 className="services-title">My Skillset</h2>
       <div className="services-content">
         <div className="services-list services-card">
-          <h3>🚀 Web Development</h3>
+          <h3><FontAwesomeIcon icon={faRocket} style={{ marginRight: '0.5rem' }} /> Web Development</h3>
           <ul>
             <li>Building interactive UIs with React & TypeScript</li>
             <li>Creating responsive and modern web applications</li>
