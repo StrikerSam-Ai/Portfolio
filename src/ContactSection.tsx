@@ -96,13 +96,13 @@ const ContactSection: React.FC = () => {
           
           {submitStatus === 'success' && (
             <div className="success-message">
-              ✅ Thank you! Your message has been sent successfully.
+              <FontAwesomeIcon icon={faCheckCircle} style={{ marginRight: '0.5rem' }} /> Thank you! Your message has been sent successfully.
             </div>
           )}
           
           {submitStatus === 'error' && (
             <div className="error-message">
-              ❌ Something went wrong. Please try again.
+              <FontAwesomeIcon icon={faExclamationCircle} style={{ marginRight: '0.5rem' }} /> Something went wrong. Please try again.
             </div>
           )}
           
@@ -119,7 +119,7 @@ const ContactSection: React.FC = () => {
           <h3>Let's Connect</h3>
           <div className="contact-details">
             <div className="contact-item">
-              <span className="contact-icon">📧</span>
+              <span className="contact-icon"><FontAwesomeIcon icon={faEnvelope} /></span>
               <div>
                 <strong>Email:</strong>
                 <a href="mailto:shashwatmishra0369@gmail.com" className="contact-link">
@@ -129,7 +129,7 @@ const ContactSection: React.FC = () => {
             </div>
             
             <div className="contact-item">
-              <span className="contact-icon">📍</span>
+              <span className="contact-icon"><FontAwesomeIcon icon={faMapMarkerAlt} /></span>
               <div>
                 <strong>Location:</strong>
                 <span>Remote / Worldwide</span>
@@ -137,7 +137,7 @@ const ContactSection: React.FC = () => {
             </div>
             
             <div className="contact-item">
-              <span className="contact-icon">⏰</span>
+              <span className="contact-icon"><FontAwesomeIcon icon={faClock} /></span>
               <div>
                 <strong>Availability:</strong>
                 <span>Open to new opportunities</span>
