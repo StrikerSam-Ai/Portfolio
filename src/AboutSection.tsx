@@ -12,6 +12,8 @@ import {
 import type { ChartArea } from 'chart.js';
 import { Link } from 'react-router-dom';
 import { browserProgressReader, type ParsedProgressReport } from './utils/browserProgressReader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBook, faArrowTrendUp, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
