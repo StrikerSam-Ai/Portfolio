@@ -8,7 +8,9 @@ import {
   faSmile, 
   faMeh, 
   faTired, 
-  faArrowTrendUp 
+  faArrowTrendUp,
+  faChartBar,
+  faTrophy
 } from '@fortawesome/free-solid-svg-icons';
 
 interface ActivityHeatmapProps {
