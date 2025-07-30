@@ -452,7 +452,7 @@ const AboutSection: React.FC = () => {
           <Link to="/writing-records?tab=progress" className="about-viewall-btn">View All Progress Reports</Link>
         </div>
         <div className="about-blogs">{/* grid-area: blogs */}
-          <h3>📝 Recent Blogs & Articles</h3>
+          <h3><FontAwesomeIcon icon={faEdit} style={{ marginRight: '0.5rem' }} /> Recent Blogs & Articles</h3>
           <ul>
             {recentBlogs.map((blog, i) => (
               <li key={i}>
