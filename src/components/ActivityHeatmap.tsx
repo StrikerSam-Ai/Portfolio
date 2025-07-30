@@ -105,10 +105,14 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
       if (middleDay && middleDay.actualDate) {
         const month = middleDay.actualDate.getMonth();
         if (month !== currentMonth) {
-          labels.push({
-            month: monthLabels[month],
-            weekIndex: weekIndex
-          });
+          // Only add if there's enough space from the previous label
+          const lastLabel = labels[labels.length - 1];
+          if (!lastLabel || weekIndex - lastLabel.weekIndex >= 4) { // Minimum 4 weeks spacing
+            labels.push({
+              month: monthLabels[month],
+              weekIndex: weekIndex
+            });
+          }
           currentMonth = month;
         }
       }
@@ -222,17 +226,20 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
         display: 'flex',
         marginBottom: '0.5rem',
         paddingLeft: '2rem',
-        position: 'relative'
+        position: 'relative',
+        height: '20px' // Fixed height to prevent layout shifts
       }}>
         {dynamicMonthLabels.map((monthLabel, i) => (
           <div
             key={i}
             style={{
               position: 'absolute',
-              left: `${2 + (monthLabel.weekIndex * 14)}px`, // 14px = 12px cell + 2px gap
+              left: `${(monthLabel.weekIndex * 14) + 2}px`, // 14px = 12px cell + 2px gap
               fontSize: '0.7rem',
               color: '#888',
-              fontFamily: 'monospace'
+              fontFamily: 'monospace',
+              minWidth: '30px', // Ensure minimum width for month text
+              textAlign: 'left'
             }}
           >
             {monthLabel.month}
