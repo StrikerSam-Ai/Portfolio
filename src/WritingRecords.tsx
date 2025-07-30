@@ -6,11 +6,11 @@ import { browserProgressReader as progressReader, type ParsedProgressReport } fr
 import { MarkdownRenderer } from './components/MarkdownRenderer';
 import { ActivityHeatmap } from './components/ActivityHeatmap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs, faGraduationCap, faFire } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 // Add icons to library
-library.add(faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs, faGraduationCap);
+library.add(faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs, faGraduationCap, faFire);
 import { Doughnut, Line, Radar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -486,7 +486,7 @@ const WritingRecords: React.FC = () => {
             }}>
               {getTrendIcon(productivityTrend)}
             </div>
-            <div style={{ fontSize: '3.5rem', marginBottom: '0.5rem' }}>🔥</div>
+            <div style={{ fontSize: '3.5rem', marginBottom: '0.5rem' }}><FontAwesomeIcon icon={faFire} /></div>
             <h3 style={{ 
               color: 'var(--color-primary)', 
               margin: '0 0 0.5rem 0', 
@@ -894,7 +894,7 @@ const WritingRecords: React.FC = () => {
               <ul style={{ margin: 0, paddingLeft: '1rem', color: 'var(--color-secondary)' }}>
                 <li style={{ marginBottom: '0.5rem', fontFamily: 'monospace', fontSize: '0.9rem' }}>
                   {streak >= 7 
-                    ? '🔥 Amazing streak! Keep the momentum going'
+                    ? <><FontAwesomeIcon icon={faFire} style={{ marginRight: '0.5rem' }} /> Amazing streak! Keep the momentum going</>
                     : <><FontAwesomeIcon icon={faCalendarDays} style={{ color: 'var(--color-primary)', marginRight: '0.5rem' }} /> Focus on building consistency</>
                   }
                 </li>
@@ -1335,7 +1335,7 @@ const WritingRecords: React.FC = () => {
               textAlign: 'center'
             }}>
               <div style={{ color: 'var(--color-primary)', fontWeight: 700, fontSize: '1.2rem' }}>
-                🔥 {progressStats?.currentStreak || 0}
+                <FontAwesomeIcon icon={faFire} style={{ marginRight: '0.5rem' }} /> {progressStats?.currentStreak || 0}
               </div>
               <div style={{ color: 'var(--color-secondary)', fontSize: '0.8rem', fontFamily: 'monospace' }}>
                 Day Streak
