@@ -985,7 +985,7 @@ const WritingRecords: React.FC = () => {
                 </h4>
                 <div style={{ color: 'var(--color-secondary)', fontFamily: 'monospace' }}>
                   <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>
-                    <strong>Day {progressStats?.latestReport?.day}:</strong> {progressStats?.latestReport?.title}
+                    <strong>{progressStats?.latestReport?.title}</strong>
                   </p>
                   <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--color-muted)' }}>
                     <FontAwesomeIcon icon={faCalendarDays} style={{ color: 'var(--color-primary)', marginRight: '0.5rem' }} />
@@ -1533,7 +1533,7 @@ const WritingRecords: React.FC = () => {
                         marginBottom: '0.5rem',
                         margin: 0
                       }}>
-                        Day {report.day}: {report.title}
+                        {report.title}
                       </h3>
                       <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                         <span style={{ color: 'var(--color-secondary)', fontFamily: 'monospace', fontSize: '0.9rem' }}>
