@@ -277,18 +277,18 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
             backdropFilter: 'blur(10px)'
           }}
         >
-          <div style={{ fontWeight: 'bold', color: '#ffb347', marginBottom: '0.3rem' }}>
+          <div style={{ fontWeight: 'bold', color: '#cc8c37', marginBottom: '0.3rem' }}>
             {formatDate(hoveredCell.date)}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
             <div>
-              <FontAwesomeIcon icon={faChartBar} style={{ marginRight: '0.5rem' }} /> Score: <span style={{ color: '#ffb347' }}>{hoveredCell.score}/10</span>
+              <FontAwesomeIcon icon={faChartBar} style={{ marginRight: '0.5rem' }} /> Score: <span style={{ color: '#cc8c37' }}>{hoveredCell.score}/10</span>
             </div>
             <div>
-              <FontAwesomeIcon icon={faTrophy} style={{ marginRight: '0.5rem' }} /> Achievements: <span style={{ color: '#00ff88' }}>{hoveredCell.achievements}</span>
+              <FontAwesomeIcon icon={faTrophy} style={{ marginRight: '0.5rem' }} /> Achievements: <span style={{ color: '#00cc66' }}>{hoveredCell.achievements}</span>
             </div>
             <div>
-              {getMoodEmoji(hoveredCell.mood)} Mood: <span style={{ color: '#ffd700' }}>{hoveredCell.mood || 'No data'}</span>
+              {getMoodEmoji(hoveredCell.mood)} Mood: <span style={{ color: '#ccaa00' }}>{hoveredCell.mood || 'No data'}</span>
             </div>
           </div>
         </div>
@@ -320,7 +320,7 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
             <div style={{ fontSize: '1.2rem', marginBottom: '0.3rem' }}>
               {stat.icon}
             </div>
-            <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#ffb347' }}>
+            <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#cc8c37' }}>
               {stat.value}
             </div>
             <div style={{ fontSize: '0.7rem', color: '#888' }}>
