@@ -105,13 +105,21 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
       if (middleDay && middleDay.actualDate) {
         const month = middleDay.actualDate.getMonth();
         if (month !== currentMonth) {
-          // Only add if there's enough space from the previous label
+          // Only add if there's enough space from the previous label (reduced to 3 weeks)
           const lastLabel = labels[labels.length - 1];
-          if (!lastLabel || weekIndex - lastLabel.weekIndex >= 4) { // Minimum 4 weeks spacing
+          if (!lastLabel || weekIndex - lastLabel.weekIndex >= 3) { // Minimum 3 weeks spacing
             labels.push({
               month: monthLabels[month],
               weekIndex: weekIndex
             });
+          } else {
+            // If we can't fit this month, replace the last one if this is more recent
+            if (lastLabel && weekIndex - lastLabel.weekIndex >= 2) {
+              labels[labels.length - 1] = {
+                month: monthLabels[month],
+                weekIndex: weekIndex
+              };
+            }
           }
           currentMonth = month;
         }
