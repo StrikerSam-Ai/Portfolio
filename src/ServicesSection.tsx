@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRocket } from '@fortawesome/free-solid-svg-icons';
+import { faRocket, faChartBar, faRobot } from '@fortawesome/free-solid-svg-icons';
 
 const ServicesSection: React.FC = () => {
   return (
@@ -18,7 +18,7 @@ const ServicesSection: React.FC = () => {
           </ul>
         </div>
         <div className="services-expertise services-card">
-          <h3>📊 Data Analytics & Visualization</h3>
+          <h3><FontAwesomeIcon icon={faChartBar} style={{ marginRight: '0.5rem' }} /> Data Analytics & Visualization</h3>
           <ul>
             <li>Developing dashboards to display complex data (Chart.js)</li>
             <li>Performing exploratory data analysis and visualization</li>
@@ -28,7 +28,7 @@ const ServicesSection: React.FC = () => {
           </ul>
         </div>
         <div className="services-process services-card">
-          <h3>🤖 Machine Learning (Learning & Aspiring)</h3>
+          <h3><FontAwesomeIcon icon={faRobot} style={{ marginRight: '0.5rem' }} /> Machine Learning (Learning & Aspiring)</h3>
           <ul>
             <li>Understanding core ML concepts and algorithms</li>
             <li>Exploring Natural Language Processing (NLP) concepts</li>
