@@ -272,9 +272,9 @@ const WritingRecords: React.FC = () => {
 
   const getTrendColor = (trend: 'up' | 'down' | 'stable'): string => {
     switch (trend) {
-      case 'up': return '#00ff88';
-      case 'down': return '#ff6b6b';
-      case 'stable': return '#ffd700';
+      case 'up': return '#00cc66'; // Darker green
+      case 'down': return '#cc4444'; // Darker red
+      case 'stable': return '#ccaa00'; // Darker yellow
     }
   };
 
@@ -296,11 +296,11 @@ const WritingRecords: React.FC = () => {
       {
         label: 'Productivity Score',
         data: actualReports.map(d => d.score),
-        borderColor: '#ffb347',
-        backgroundColor: 'rgba(255, 179, 71, 0.1)',
+        borderColor: '#cc8c37', // Darker orange
+        backgroundColor: 'rgba(204, 140, 55, 0.1)', // Darker orange with transparency
         borderWidth: 3,
         pointBackgroundColor: actualReports.map(d => getMoodColorFromText(d.mood)),
-        pointBorderColor: '#ffb347',
+        pointBorderColor: '#cc8c37', // Darker orange
         pointBorderWidth: 2,
         pointRadius: 6,
         pointHoverRadius: 8,
@@ -1901,9 +1901,4 @@ const WritingRecords: React.FC = () => {
           {selectedTab === 'research' && <ResearchBookshelf />}
         </div>
       </div>
-      <EnhancedModal />
-    </div>
-  );
-};
-
-export default WritingRecords; 
+      <Enha
