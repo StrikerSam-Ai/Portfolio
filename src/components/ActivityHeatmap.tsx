@@ -87,6 +87,11 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
   const yearData = generateYearData();
   const weeks = Math.ceil(yearData.length / 7);
   
+  const monthLabels = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+  
   // Generate dynamic month labels based on actual data
   const getMonthLabels = () => {
     const labels = [];
@@ -157,11 +162,6 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
     if (mood.includes('😓') || mood.includes('😰')) return <FontAwesomeIcon icon={faTired} />;
     return <FontAwesomeIcon icon={faMeh} />;
   };
-
-  const monthLabels = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-  ];
 
   const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
