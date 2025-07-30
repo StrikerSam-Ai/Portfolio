@@ -5,6 +5,12 @@ import { useEffect } from 'react';
 import { browserProgressReader as progressReader, type ParsedProgressReport } from './utils/browserProgressReader';
 import { MarkdownRenderer } from './components/MarkdownRenderer';
 import { ActivityHeatmap } from './components/ActivityHeatmap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+
+// Add icons to library
+library.add(faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs);
 import { Doughnut, Line, Radar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -288,7 +294,7 @@ const WritingRecords: React.FC = () => {
           fontFamily: 'monospace'
         }}>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📊</div>
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}><FontAwesomeIcon icon={faChartLine} /></div>
             <div>Loading dashboard...</div>
           </div>
         </div>
@@ -297,7 +303,7 @@ const WritingRecords: React.FC = () => {
     if (!progressStats) {
       return (
         <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-secondary)' }}>
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📊</div>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}><FontAwesomeIcon icon={faChartLine} /></div>
           <p style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Loading your analytics...</p>
           <div style={{ 
             width: '60px', 
@@ -525,7 +531,7 @@ const WritingRecords: React.FC = () => {
             border: '1px solid rgba(255,179,71,0.3)',
             position: 'relative'
           }}>
-            <div style={{ fontSize: '3.5rem', marginBottom: '0.5rem' }}>📊</div>
+            <div style={{ fontSize: '3.5rem', marginBottom: '0.5rem' }}><FontAwesomeIcon icon={faChartLine} /></div>
             <h3 style={{ 
               color: 'var(--color-primary)', 
               margin: '0 0 0.5rem 0', 
@@ -566,7 +572,7 @@ const WritingRecords: React.FC = () => {
             padding: '2rem',
             border: '1px solid rgba(255,179,71,0.3)'
           }}>
-            <div style={{ fontSize: '3.5rem', marginBottom: '0.5rem' }}>🏆</div>
+            <div style={{ fontSize: '3.5rem', marginBottom: '0.5rem' }}><FontAwesomeIcon icon={faTrophy} /></div>
             <h3 style={{ 
               color: 'var(--color-primary)', 
               margin: '0 0 0.5rem 0', 
@@ -745,7 +751,7 @@ const WritingRecords: React.FC = () => {
               fontSize: '1.3rem',
               fontFamily: 'monospace'
             }}>
-              🎯 Learning Focus Areas
+              <FontAwesomeIcon icon={faCrosshairs} style={{ marginRight: '0.5rem' }} /> Learning Focus Areas
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxHeight: '280px', overflowY: 'auto' }}>
               {(progressStats?.topTags || []).slice(0, 10).map((tagData: any, i: number) => {
@@ -848,7 +854,7 @@ const WritingRecords: React.FC = () => {
                 alignItems: 'center',
                 gap: '0.5rem'
               }}>
-                📊 Performance Analysis
+                <FontAwesomeIcon icon={faChartLine} style={{ marginRight: '0.5rem' }} /> Performance Analysis
               </h4>
               <ul style={{ margin: 0, paddingLeft: '1rem', color: 'var(--color-secondary)' }}>
                 <li style={{ marginBottom: '0.5rem', fontFamily: 'monospace', fontSize: '0.9rem' }}>
@@ -863,7 +869,7 @@ const WritingRecords: React.FC = () => {
                   💡 Peak performance: {Math.max(...productivityScores)}/10
                 </li>
                 <li style={{ fontFamily: 'monospace', fontSize: '0.9rem' }}>
-                  🎯 Achievement rate: {achievementVelocity} per day
+                  <FontAwesomeIcon icon={faCrosshairs} style={{ marginRight: '0.5rem' }} /> Achievement rate: {achievementVelocity} per day
                 </li>
               </ul>
             </div>
@@ -883,13 +889,13 @@ const WritingRecords: React.FC = () => {
                 alignItems: 'center',
                 gap: '0.5rem'
               }}>
-                🎯 Smart Recommendations
+                <FontAwesomeIcon icon={faCrosshairs} style={{ marginRight: '0.5rem' }} /> Smart Recommendations
               </h4>
               <ul style={{ margin: 0, paddingLeft: '1rem', color: 'var(--color-secondary)' }}>
                 <li style={{ marginBottom: '0.5rem', fontFamily: 'monospace', fontSize: '0.9rem' }}>
                   {streak >= 7 
                     ? '🔥 Amazing streak! Keep the momentum going'
-                    : '📅 Focus on building consistency'
+                    : <><FontAwesomeIcon icon={faCalendarDays} style={{ color: 'var(--color-primary)', marginRight: '0.5rem' }} /> Focus on building consistency</>
                   }
                 </li>
                 <li style={{ marginBottom: '0.5rem', fontFamily: 'monospace', fontSize: '0.9rem' }}>
@@ -917,14 +923,15 @@ const WritingRecords: React.FC = () => {
                   alignItems: 'center',
                   gap: '0.5rem'
                 }}>
-                  🏆 Recent Milestone
+                  <FontAwesomeIcon icon={faAward} style={{ marginRight: '0.5rem' }} /> Recent Milestone
                 </h4>
                 <div style={{ color: 'var(--color-secondary)', fontFamily: 'monospace' }}>
                   <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem' }}>
                     <strong>Day {progressStats?.latestReport?.day}:</strong> {progressStats?.latestReport?.title}
                   </p>
                   <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--color-muted)' }}>
-                    📅 {new Date(progressStats?.latestReport?.date || new Date()).toLocaleDateString()}
+                    <FontAwesomeIcon icon={faCalendarDays} style={{ color: 'var(--color-primary)', marginRight: '0.5rem' }} />
+                    {new Date(progressStats?.latestReport?.date || new Date()).toLocaleDateString()}
                   </p>
                 </div>
               </div>
@@ -1343,7 +1350,7 @@ const WritingRecords: React.FC = () => {
               textAlign: 'center'
             }}>
               <div style={{ color: 'var(--color-primary)', fontWeight: 700, fontSize: '1.2rem' }}>
-                📊 {progressStats?.averageProductivity || 0}/10
+                <FontAwesomeIcon icon={faChartLine} style={{ marginRight: '0.5rem' }} /> {progressStats?.averageProductivity || 0}/10
               </div>
               <div style={{ color: 'var(--color-secondary)', fontSize: '0.8rem', fontFamily: 'monospace' }}>
                 Avg Score
@@ -1358,7 +1365,7 @@ const WritingRecords: React.FC = () => {
               textAlign: 'center'
             }}>
               <div style={{ color: 'var(--color-primary)', fontWeight: 700, fontSize: '1.2rem' }}>
-                🏆 {progressStats?.totalAchievements || 0}
+                <FontAwesomeIcon icon={faTrophy} style={{ marginRight: '0.5rem' }} /> {progressStats?.totalAchievements || 0}
               </div>
               <div style={{ color: 'var(--color-secondary)', fontSize: '0.8rem', fontFamily: 'monospace' }}>
                 Achievements
@@ -1805,7 +1812,7 @@ const WritingRecords: React.FC = () => {
                     fontSize: '1.3rem',
                     filter: viewMode === mode ? 'none' : 'grayscale(0.3)'
                   }}>
-                    {mode === 'timeline' ? '📅' : '📊'}
+                    {mode === 'timeline' ? <FontAwesomeIcon icon={faCalendarDays} /> : <FontAwesomeIcon icon={faChartLine} />}
                   </span>
                   <span>
                     {mode === 'timeline' ? 'Timeline' : 'Dashboard'}
