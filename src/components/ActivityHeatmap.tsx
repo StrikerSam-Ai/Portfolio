@@ -33,14 +33,23 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
     y: number;
   } | null>(null);
 
-  // Generate 365 days from today backwards
+  // Generate 365 days from today backwards, properly aligned to weeks
   const generateYearData = () => {
     const result = [];
     const today = new Date();
     
-    for (let i = 364; i >= 0; i--) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
+    // Start from 365 days ago and go forward to today
+    const startDate = new Date(today);
+    startDate.setDate(startDate.getDate() - 364);
+    
+    // Find the Sunday of the week containing our start date
+    const startOfWeek = new Date(startDate);
+    startOfWeek.setDate(startDate.getDate() - startDate.getDay());
+    
+    // Generate enough days to fill complete weeks (53 weeks * 7 days = 371 days)
+    for (let i = 0; i < 371; i++) {
+      const date = new Date(startOfWeek);
+      date.setDate(startOfWeek.getDate() + i);
       const dateStr = date.toISOString().split('T')[0];
       
       // Find data for this date or default to 0
@@ -51,18 +60,60 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
         mood: 'neutral'
       };
       
+      // Skip dates that are in the future
+      if (date > today) {
+        dayData.score = 0; // Ensure future dates show as empty
+      }
+      
       result.push({
         ...dayData,
         dayOfWeek: date.getDay(),
-        week: Math.floor(i / 7)
+        week: Math.floor(i / 7),
+        month: date.getMonth(),
+        day: date.getDate(),
+        actualDate: date
       });
     }
+    
+    // Debug log to check if we're finding the data
+    console.log('ActivityHeatmap data points:', data.length);
+    console.log('Sample data:', data.slice(0, 3));
+    console.log('Generated year data with scores > 0:', result.filter(d => d.score > 0).length);
+    console.log('Sample generated data with scores:', result.filter(d => d.score > 0).slice(0, 3));
     
     return result;
   };
 
   const yearData = generateYearData();
-  const weeks = Math.ceil(365 / 7);
+  const weeks = Math.ceil(yearData.length / 7);
+  
+  // Generate dynamic month labels based on actual data
+  const getMonthLabels = () => {
+    const labels = [];
+    let currentMonth = -1;
+    let weekIndex = 0;
+    
+    for (let i = 0; i < yearData.length; i += 7) {
+      const weekData = yearData.slice(i, i + 7);
+      const middleDay = weekData[3] || weekData[0]; // Use Wednesday or first day of week
+      
+      if (middleDay && middleDay.actualDate) {
+        const month = middleDay.actualDate.getMonth();
+        if (month !== currentMonth) {
+          labels.push({
+            month: monthLabels[month],
+            weekIndex: weekIndex
+          });
+          currentMonth = month;
+        }
+      }
+      weekIndex++;
+    }
+    
+    return labels;
+  };
+  
+  const dynamicMonthLabels = getMonthLabels();
 
   // Color intensity based on productivity score
   const getIntensityColor = (score: number) => {
@@ -170,19 +221,21 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
       <div style={{
         display: 'flex',
         marginBottom: '0.5rem',
-        paddingLeft: '2rem'
+        paddingLeft: '2rem',
+        position: 'relative'
       }}>
-        {monthLabels.map((month, i) => (
+        {dynamicMonthLabels.map((monthLabel, i) => (
           <div
             key={i}
             style={{
-              flex: `0 0 ${100/12}%`,
+              position: 'absolute',
+              left: `${2 + (monthLabel.weekIndex * 14)}px`, // 14px = 12px cell + 2px gap
               fontSize: '0.7rem',
               color: '#888',
               fontFamily: 'monospace'
             }}
           >
-            {month}
+            {monthLabel.month}
           </div>
         ))}
       </div>
@@ -221,6 +274,7 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
         <div style={{
           display: 'grid',
           gridTemplateColumns: `repeat(${weeks}, 12px)`,
+          gridTemplateRows: 'repeat(7, 12px)',
           gap: '2px'
         }}>
           {yearData.map((dayData, index) => (
@@ -236,7 +290,7 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
                 transition: 'all 0.2s ease',
                 position: 'relative',
                 gridColumn: Math.floor(index / 7) + 1,
-                gridRow: (index % 7) + 1
+                gridRow: dayData.dayOfWeek + 1
               }}
               onMouseEnter={(e) => handleCellHover(dayData, e)}
               onMouseLeave={() => setHoveredCell(null)}
