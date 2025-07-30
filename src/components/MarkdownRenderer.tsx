@@ -1,5 +1,7 @@
 // components/MarkdownRenderer.tsx
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 
 interface MarkdownRendererProps {
   content: string;
@@ -144,7 +146,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, sty
     if (header.includes('Done')) return '✅';
     if (header.includes('Challenges')) return '🚧';
     if (header.includes('Learned')) return '💡';
-    if (header.includes('Tomorrow')) return '🎯';
+    if (header.includes('Tomorrow')) return <FontAwesomeIcon icon={faCrosshairs} />;
     return '📝';
   };
 
