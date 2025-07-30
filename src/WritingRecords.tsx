@@ -325,13 +325,13 @@ const WritingRecords: React.FC = () => {
         {
           label: 'Mood Distribution',
           data: moodData,
-          backgroundColor: 'rgba(255, 179, 71, 0.2)',
-          borderColor: '#ffb347',
+          backgroundColor: 'rgba(204, 140, 55, 0.2)', // Darker orange with transparency
+          borderColor: '#cc8c37', // Darker orange
           borderWidth: 2,
-          pointBackgroundColor: '#ffb347',
+          pointBackgroundColor: '#cc8c37', // Darker orange
           pointBorderColor: '#ffffff',
           pointHoverBackgroundColor: '#ffffff',
-          pointHoverBorderColor: '#ffb347'
+          pointHoverBorderColor: '#cc8c37' // Darker orange
         }
       ]
     };
@@ -1901,4 +1901,9 @@ const WritingRecords: React.FC = () => {
           {selectedTab === 'research' && <ResearchBookshelf />}
         </div>
       </div>
-      <Enha
+      <EnhancedModal />
+    </div>
+  );
+};
+
+export default WritingRecords; 
