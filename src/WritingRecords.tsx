@@ -6,11 +6,11 @@ import { browserProgressReader as progressReader, type ParsedProgressReport } fr
 import { MarkdownRenderer } from './components/MarkdownRenderer';
 import { ActivityHeatmap } from './components/ActivityHeatmap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs, faGraduationCap, faFire } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs, faGraduationCap, faFire, faRocket } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 // Add icons to library
-library.add(faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs, faGraduationCap, faFire);
+library.add(faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs, faGraduationCap, faFire, faRocket);
 import { Doughnut, Line, Radar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -178,10 +178,10 @@ const WritingRecords: React.FC = () => {
     }
   };
 
-  const getMoodEmojiFromText = (moodText: string): string => {
+  const getMoodEmojiFromText = (moodText: string): React.ReactNode => {
     const mood = moodText.toLowerCase().replace(/[^a-z]/g, '');
     switch (mood) {
-      case 'excellent': return '🚀';
+      case 'excellent': return <FontAwesomeIcon icon={faRocket} />;
       case 'good': return '😊';
       case 'okay': return '😐';
       case 'challenging': return '😤';
@@ -859,7 +859,7 @@ const WritingRecords: React.FC = () => {
               <ul style={{ margin: 0, paddingLeft: '1rem', color: 'var(--color-secondary)' }}>
                 <li style={{ marginBottom: '0.5rem', fontFamily: 'monospace', fontSize: '0.9rem' }}>
                   {productivityTrend === 'up' 
-                    ? '🚀 Your productivity is trending upward!' 
+                    ? <><FontAwesomeIcon icon={faRocket} style={{ marginRight: '0.5rem' }} /> Your productivity is trending upward!</>
                     : productivityTrend === 'down' 
                     ? '⚠️ Consider adjusting your approach' 
                     : '✨ Maintaining consistent performance'
@@ -1189,7 +1189,7 @@ const WritingRecords: React.FC = () => {
                       e.currentTarget.style.transform = 'translateY(0)';
                     }}
                   >
-                    <span>🚀</span> Open in New Tab
+                    <FontAwesomeIcon icon={faRocket} style={{ marginRight: '0.5rem' }} /> Open in New Tab
                   </button>
 
                   <button 
