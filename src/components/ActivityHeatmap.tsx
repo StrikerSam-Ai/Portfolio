@@ -282,10 +282,10 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
             <div>
-              📊 Score: <span style={{ color: '#ffb347' }}>{hoveredCell.score}/10</span>
+              <FontAwesomeIcon icon={faChartBar} style={{ marginRight: '0.5rem' }} /> Score: <span style={{ color: '#ffb347' }}>{hoveredCell.score}/10</span>
             </div>
             <div>
-              🏆 Achievements: <span style={{ color: '#00ff88' }}>{hoveredCell.achievements}</span>
+              <FontAwesomeIcon icon={faTrophy} style={{ marginRight: '0.5rem' }} /> Achievements: <span style={{ color: '#00ff88' }}>{hoveredCell.achievements}</span>
             </div>
             <div>
               {getMoodEmoji(hoveredCell.mood)} Mood: <span style={{ color: '#ffd700' }}>{hoveredCell.mood || 'No data'}</span>
