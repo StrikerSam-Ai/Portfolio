@@ -431,7 +431,7 @@ const AboutSection: React.FC = () => {
           <Link to="/writing-records?tab=research" className="about-viewall-btn">View All Publications</Link>
         </div>
         <div className="about-progress">{/* grid-area: progress */}
-          <h3>📈 Recent Progress Reports</h3>
+          <h3><FontAwesomeIcon icon={faArrowTrendUp} style={{ marginRight: '0.5rem' }} /> Recent Progress Reports</h3>
           <ul>
             {isLoading ? (
               <li>Loading...</li>
