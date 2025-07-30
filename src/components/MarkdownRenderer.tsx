@@ -1,7 +1,14 @@
 // components/MarkdownRenderer.tsx
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCrosshairs } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faCrosshairs, 
+  faCheckCircle, 
+  faLightbulb, 
+  faEdit, 
+  faExclamationTriangle,
+  faTag
+} from '@fortawesome/free-solid-svg-icons';
 
 interface MarkdownRendererProps {
   content: string;
@@ -105,7 +112,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, sty
               fontSize: '1.2rem', 
               marginBottom: '1rem' 
             }}>
-              🏷️ Tags
+              <FontAwesomeIcon icon={faTag} style={{ marginRight: '0.5rem' }} /> Tags
             </h3>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
               {tags.map((tag, tagIndex) => (
@@ -142,19 +149,19 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, sty
     return elements;
   };
 
-  const getHeaderIcon = (header: string) => {
-    if (header.includes('Done')) return '✅';
-    if (header.includes('Challenges')) return '🚧';
-    if (header.includes('Learned')) return '💡';
+  const getHeaderIcon = (header: string): React.ReactNode => {
+    if (header.includes('Done')) return <FontAwesomeIcon icon={faCheckCircle} />;
+    if (header.includes('Challenges')) return <FontAwesomeIcon icon={faExclamationTriangle} />;
+    if (header.includes('Learned')) return <FontAwesomeIcon icon={faLightbulb} />;
     if (header.includes('Tomorrow')) return <FontAwesomeIcon icon={faCrosshairs} />;
-    return '📝';
+    return <FontAwesomeIcon icon={faEdit} />;
   };
 
-  const getSectionIcon = (section: string) => {
-    if (section.includes('Done')) return '✓';
-    if (section.includes('Challenges')) return '⚠';
-    if (section.includes('Learned')) return '💡';
-    if (section.includes('Tomorrow')) return '→';
+  const getSectionIcon = (section: string): React.ReactNode => {
+    if (section.includes('Done')) return <FontAwesomeIcon icon={faCheckCircle} />;
+    if (section.includes('Challenges')) return <FontAwesomeIcon icon={faExclamationTriangle} />;
+    if (section.includes('Learned')) return <FontAwesomeIcon icon={faLightbulb} />;
+    if (section.includes('Tomorrow')) return <FontAwesomeIcon icon={faCrosshairs} />;
     return '•';
   };
 
