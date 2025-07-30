@@ -6,11 +6,69 @@ import { browserProgressReader as progressReader, type ParsedProgressReport } fr
 import { MarkdownRenderer } from './components/MarkdownRenderer';
 import { ActivityHeatmap } from './components/ActivityHeatmap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs, faGraduationCap, faFire, faRocket } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faCalendarDays, 
+  faChartLine, 
+  faTrophy, 
+  faAward, 
+  faCrosshairs, 
+  faGraduationCap, 
+  faFire, 
+  faRocket,
+  faSmile,
+  faMeh,
+  faAngry,
+  faTired,
+  faArrowTrendUp,
+  faArrowTrendDown,
+  faArrowRight,
+  faLightbulb,
+  faExclamationTriangle,
+  faStar,
+  faHourglass,
+  faEdit,
+  faRobot,
+  faFileAlt,
+  faClipboard,
+  faSync,
+  faCheckCircle,
+  faClock,
+  faBook,
+  faThermometerHalf
+} from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 // Add icons to library
-library.add(faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs, faGraduationCap, faFire, faRocket);
+library.add(
+  faCalendarDays, 
+  faChartLine, 
+  faTrophy, 
+  faAward, 
+  faCrosshairs, 
+  faGraduationCap, 
+  faFire, 
+  faRocket,
+  faSmile,
+  faMeh,
+  faAngry,
+  faTired,
+  faArrowTrendUp,
+  faArrowTrendDown,
+  faArrowRight,
+  faLightbulb,
+  faExclamationTriangle,
+  faStar,
+  faHourglass,
+  faEdit,
+  faRobot,
+  faFileAlt,
+  faClipboard,
+  faSync,
+  faCheckCircle,
+  faClock,
+  faBook,
+  faThermometerHalf
+);
 import { Doughnut, Line, Radar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -182,11 +240,11 @@ const WritingRecords: React.FC = () => {
     const mood = moodText.toLowerCase().replace(/[^a-z]/g, '');
     switch (mood) {
       case 'excellent': return <FontAwesomeIcon icon={faRocket} />;
-      case 'good': return '😊';
-      case 'okay': return '😐';
-      case 'challenging': return '😤';
-      case 'tough': return '😓';
-      default: return '😊';
+      case 'good': return <FontAwesomeIcon icon={faSmile} />;
+      case 'okay': return <FontAwesomeIcon icon={faMeh} />;
+      case 'challenging': return <FontAwesomeIcon icon={faAngry} />;
+      case 'tough': return <FontAwesomeIcon icon={faTired} />;
+      default: return <FontAwesomeIcon icon={faSmile} />;
     }
   };
 
@@ -204,11 +262,11 @@ const WritingRecords: React.FC = () => {
     return 'stable';
   };
 
-  const getTrendIcon = (trend: 'up' | 'down' | 'stable'): string => {
+  const getTrendIcon = (trend: 'up' | 'down' | 'stable'): React.ReactNode => {
     switch (trend) {
-      case 'up': return '📈';
-      case 'down': return '📉';
-      case 'stable': return '➡️';
+      case 'up': return <FontAwesomeIcon icon={faArrowTrendUp} />;
+      case 'down': return <FontAwesomeIcon icon={faArrowTrendDown} />;
+      case 'stable': return <FontAwesomeIcon icon={faArrowRight} />;
     }
   };
 
@@ -676,7 +734,7 @@ const WritingRecords: React.FC = () => {
                 fontSize: '1.3rem',
                 fontFamily: 'monospace'
               }}>
-                📈 Productivity Trend (14 Days)
+                <FontAwesomeIcon icon={faArrowTrendUp} style={{ marginRight: '0.5rem' }} /> Productivity Trend (14 Days)
               </h3>
               <div style={{ height: '280px', position: 'relative' }}>
                 <Line data={productivityTrendData} options={lineChartOptions} />
@@ -700,7 +758,7 @@ const WritingRecords: React.FC = () => {
                 fontSize: '1.3rem',
                 fontFamily: 'monospace'
               }}>
-                🌡️ Mood Intelligence
+                <FontAwesomeIcon icon={faThermometerHalf} style={{ marginRight: '0.5rem' }} /> Mood Intelligence
               </h3>
               <div style={{ height: '280px', position: 'relative' }}>
                 <Radar data={moodRadarData} options={radarChartOptions} />
@@ -730,7 +788,7 @@ const WritingRecords: React.FC = () => {
               fontSize: '1.3rem',
               fontFamily: 'monospace'
             }}>
-              😊 Emotional Patterns
+              <FontAwesomeIcon icon={faSmile} style={{ marginRight: '0.5rem' }} /> Emotional Patterns
             </h3>
             <div style={{ height: '280px', position: 'relative' }}>
               <Doughnut data={moodChartData} options={doughnutOptions} />
@@ -831,7 +889,7 @@ const WritingRecords: React.FC = () => {
             fontFamily: 'monospace',
             textAlign: 'center'
           }}>
-            🤖 AI-Powered Insights
+            <FontAwesomeIcon icon={faRobot} style={{ marginRight: '0.5rem' }} /> AI-Powered Insights
           </h3>
           
           <div style={{
@@ -861,12 +919,12 @@ const WritingRecords: React.FC = () => {
                   {productivityTrend === 'up' 
                     ? <><FontAwesomeIcon icon={faRocket} style={{ marginRight: '0.5rem' }} /> Your productivity is trending upward!</>
                     : productivityTrend === 'down' 
-                    ? '⚠️ Consider adjusting your approach' 
-                    : '✨ Maintaining consistent performance'
+                    ? <><FontAwesomeIcon icon={faExclamationTriangle} style={{ marginRight: '0.5rem' }} /> Consider adjusting your approach</> 
+                    : <><FontAwesomeIcon icon={faStar} style={{ marginRight: '0.5rem' }} /> Maintaining consistent performance</>
                   }
                 </li>
                 <li style={{ marginBottom: '0.5rem', fontFamily: 'monospace', fontSize: '0.9rem' }}>
-                  💡 Peak performance: {Math.max(...productivityScores)}/10
+                  <FontAwesomeIcon icon={faLightbulb} style={{ marginRight: '0.5rem' }} /> Peak performance: {Math.max(...productivityScores)}/10
                 </li>
                 <li style={{ fontFamily: 'monospace', fontSize: '0.9rem' }}>
                   <FontAwesomeIcon icon={faCrosshairs} style={{ marginRight: '0.5rem' }} /> Achievement rate: {achievementVelocity} per day
@@ -899,10 +957,10 @@ const WritingRecords: React.FC = () => {
                   }
                 </li>
                 <li style={{ marginBottom: '0.5rem', fontFamily: 'monospace', fontSize: '0.9rem' }}>
-                  📚 Top focus: {progressStats?.topTags?.[0]?.tag || 'Define your goals'}
+                  <FontAwesomeIcon icon={faBook} style={{ marginRight: '0.5rem' }} /> Top focus: {progressStats?.topTags?.[0]?.tag || 'Define your goals'}
                 </li>
                 <li style={{ fontFamily: 'monospace', fontSize: '0.9rem' }}>
-                  ⏰ Optimal for learning new skills
+                  <FontAwesomeIcon icon={faClock} style={{ marginRight: '0.5rem' }} /> Optimal for learning new skills
                 </li>
               </ul>
             </div>
@@ -1122,7 +1180,7 @@ const WritingRecords: React.FC = () => {
                   fontSize: '3rem', 
                   marginBottom: '1rem',
                   opacity: 0.7 
-                }}>📄</div>
+                }}><FontAwesomeIcon icon={faFileAlt} /></div>
                 
                 <h3 style={{ 
                   color: 'var(--color-primary)', 
@@ -1198,7 +1256,7 @@ const WritingRecords: React.FC = () => {
                       // Show copied feedback
                       const button = document.activeElement as HTMLButtonElement;
                       const originalText = button.innerHTML;
-                      button.innerHTML = '✅ Copied!';
+                      button.innerHTML = '<i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i> Copied!';
                       setTimeout(() => {
                         button.innerHTML = originalText;
                       }, 2000);
@@ -1219,7 +1277,7 @@ const WritingRecords: React.FC = () => {
                       gap: '0.5rem'
                     }}
                   >
-                    <span>📋</span> Copy Link
+                    <FontAwesomeIcon icon={faClipboard} style={{ marginRight: '0.5rem' }} /> Copy Link
                   </button>
 
                   <button 
@@ -1240,7 +1298,7 @@ const WritingRecords: React.FC = () => {
                       gap: '0.5rem'
                     }}
                   >
-                    <span>🔄</span> Try Again
+                    <FontAwesomeIcon icon={faSync} style={{ marginRight: '0.5rem' }} /> Try Again
                   </button>
                 </div>
 
@@ -1306,7 +1364,7 @@ const WritingRecords: React.FC = () => {
           color: 'var(--color-secondary)',
           fontFamily: 'monospace'
         }}>
-          <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>⏳</div>
+          <div style={{ fontSize: '2rem', marginBottom: '1rem' }}><FontAwesomeIcon icon={faHourglass} /></div>
           <p>Loading your progress reports...</p>
         </div>
       );
@@ -1380,7 +1438,7 @@ const WritingRecords: React.FC = () => {
               textAlign: 'center'
             }}>
               <div style={{ color: 'var(--color-primary)', fontWeight: 700, fontSize: '1.2rem' }}>
-                📝 {progressStats?.totalDays || 0}
+                <FontAwesomeIcon icon={faEdit} style={{ marginRight: '0.5rem' }} /> {progressStats?.totalDays || 0}
               </div>
               <div style={{ color: 'var(--color-secondary)', fontSize: '0.8rem', fontFamily: 'monospace' }}>
                 Total Days
@@ -1398,7 +1456,7 @@ const WritingRecords: React.FC = () => {
               fontFamily: 'monospace',
               padding: '3rem 1rem'
             }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem', opacity: 0.6 }}>📝</div>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', opacity: 0.6 }}><FontAwesomeIcon icon={faEdit} /></div>
               <h3 style={{ color: 'var(--color-primary)', marginBottom: '1rem' }}>Start Your Progress Journey!</h3>
               <p style={{ marginBottom: '1.5rem', lineHeight: 1.6 }}>
                 Create your first daily report to track your learning progress.
@@ -1585,9 +1643,9 @@ const WritingRecords: React.FC = () => {
                       }}
                     >
                       {expandedReport === `${report.day}-${report.date}` ? (
-                        <>📖 Hide Details</>
+                        <><FontAwesomeIcon icon={faBook} style={{ marginRight: '0.5rem' }} /> Hide Details</>
                       ) : (
-                        <>📄 Read Full Report</>
+                        <><FontAwesomeIcon icon={faFileAlt} style={{ marginRight: '0.5rem' }} /> Read Full Report</>
                       )}
                     </button>
                     
@@ -1611,7 +1669,7 @@ const WritingRecords: React.FC = () => {
                         }}
                         title="Copy file path"
                       >
-                        📋 Copy Path
+                        <FontAwesomeIcon icon={faClipboard} style={{ marginRight: '0.5rem' }} /> Copy Path
                       </button>
                     )}
                   </div>
