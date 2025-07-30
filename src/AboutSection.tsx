@@ -418,7 +418,7 @@ const AboutSection: React.FC = () => {
           </ul>
         </div>
         <div className="about-publications">{/* grid-area: publications */}
-          <h3>📚 Publications & Research</h3>
+          <h3><FontAwesomeIcon icon={faBook} style={{ marginRight: '0.5rem' }} /> Publications & Research</h3>
           <ul>
             {recentPubs.map((pub, i) => (
               <li key={i}>
