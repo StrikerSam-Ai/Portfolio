@@ -130,7 +130,7 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
         marginBottom: '2rem'
       }}>
         <h3 style={{
-          color: '#ffb347',
+          color: '#cc8c37', // Darker orange
           fontSize: '1.5rem',
           fontWeight: 'bold',
           margin: 0,

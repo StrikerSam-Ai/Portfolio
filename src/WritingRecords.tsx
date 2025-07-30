@@ -505,11 +505,11 @@ const WritingRecords: React.FC = () => {
       datasets: [{
         data: Object.values(progressStats?.moodDistribution || {}),
         backgroundColor: [
-          '#00ff88', // excellent
-          '#ffb347', // good  
-          '#ffd700', // okay
-          '#ff8c00', // challenging
-          '#ff6b6b'  // tough
+          '#00cc66', // excellent - darker green
+          '#cc8c37', // good - darker orange  
+          '#ccaa00', // okay - darker yellow
+          '#cc6600', // challenging - darker orange-red
+          '#cc4444'  // tough - darker red
         ],
         borderWidth: 3,
         borderColor: '#181818',
