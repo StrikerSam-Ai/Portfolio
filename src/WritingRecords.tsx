@@ -1472,7 +1472,7 @@ const WritingRecords: React.FC = () => {
                 <h4 style={{ color: 'var(--color-primary)', marginBottom: '1rem' }}>Quick Start:</h4>
                 <div style={{ textAlign: 'left', color: 'var(--color-secondary)' }}>
                   <p><strong>Terminal:</strong> <code>npm run quick-report</code></p>
-                  <p><strong>VS Code:</strong> Ctrl+Shift+P → "Tasks: Run Task" → "⚡ Quick Progress Report"</p>
+                  <p><strong>VS Code:</strong> Ctrl+Shift+P → "Tasks: Run Task" → "<FontAwesomeIcon icon={faLightbulb} style={{ marginRight: '0.5rem' }} /> Quick Progress Report"</p>
                 </div>
               </div>
             </div>
