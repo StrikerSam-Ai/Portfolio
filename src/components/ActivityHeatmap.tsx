@@ -1,5 +1,7 @@
 // components/ActivityHeatmap.tsx
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarDays, faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 
 interface ActivityHeatmapProps {
   data: Array<{
@@ -126,7 +128,7 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
           alignItems: 'center',
           gap: '0.5rem'
         }}>
-          📅 365-Day Activity Heatmap
+          <FontAwesomeIcon icon={faCalendarDays} style={{ marginRight: '0.5rem' }} /> 365-Day Activity Heatmap
         </h3>
         
         {/* Legend */}
@@ -293,7 +295,7 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
           { label: 'Active Days', value: data.filter(d => d.score > 0).length, icon: '🔥' },
           { label: 'Best Streak', value: '7 days', icon: '⚡' },
           { label: 'Avg Score', value: (data.reduce((acc, d) => acc + d.score, 0) / data.length || 0).toFixed(1), icon: '📈' },
-          { label: 'Total Work', value: `${data.reduce((acc, d) => acc + d.achievements, 0)} items`, icon: '🎯' }
+          { label: 'Total Work', value: `${data.reduce((acc, d) => acc + d.achievements, 0)} items`, icon: <FontAwesomeIcon icon={faCrosshairs} /> }
         ].map((stat, i) => (
           <div
             key={i}
