@@ -1559,7 +1559,7 @@ const WritingRecords: React.FC = () => {
                   {report.achievements && report.achievements.length > 0 && (
                     <div style={{ marginBottom: '1rem' }}>
                       <h4 style={{ color: 'var(--color-primary)', fontSize: '0.9rem', marginBottom: '0.5rem', fontFamily: 'monospace' }}>
-                        ✅ Key Achievements
+                        <FontAwesomeIcon icon={faCheckCircle} style={{ marginRight: '0.5rem' }} /> Key Achievements
                       </h4>
                       <ul style={{ margin: 0, paddingLeft: '1rem' }}>
                         {report.achievements.slice(0, 3).map((achievement, i) => (
