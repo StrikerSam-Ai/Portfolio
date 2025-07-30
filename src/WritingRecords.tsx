@@ -227,12 +227,12 @@ const WritingRecords: React.FC = () => {
   const getMoodColorFromText = (moodText: string): string => {
     const mood = moodText.toLowerCase().replace(/[^a-z]/g, '');
     switch (mood) {
-      case 'excellent': return '#00ff88';
-      case 'good': return '#ffb347'; 
-      case 'okay': return '#ffd700';
-      case 'challenging': return '#ff8c00';
-      case 'tough': return '#ff6b6b';
-      default: return '#ffb347';
+      case 'excellent': return '#00cc66'; // Darker green
+      case 'good': return '#cc8c37'; // Darker orange 
+      case 'okay': return '#ccaa00'; // Darker yellow
+      case 'challenging': return '#cc6600'; // Darker orange-red
+      case 'tough': return '#cc4444'; // Darker red
+      default: return '#cc8c37'; // Darker orange default
     }
   };
 
