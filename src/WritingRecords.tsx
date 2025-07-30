@@ -6,11 +6,11 @@ import { browserProgressReader as progressReader, type ParsedProgressReport } fr
 import { MarkdownRenderer } from './components/MarkdownRenderer';
 import { ActivityHeatmap } from './components/ActivityHeatmap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 // Add icons to library
-library.add(faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs);
+library.add(faCalendarDays, faChartLine, faTrophy, faAward, faCrosshairs, faGraduationCap);
 import { Doughnut, Line, Radar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -605,7 +605,7 @@ const WritingRecords: React.FC = () => {
             padding: '2rem',
             border: '1px solid rgba(255,179,71,0.3)'
           }}>
-            <div style={{ fontSize: '3.5rem', marginBottom: '0.5rem' }}>🧠</div>
+            <div style={{ fontSize: '3.5rem', marginBottom: '0.5rem' }}><FontAwesomeIcon icon={faGraduationCap} /></div>
             <h3 style={{ 
               color: 'var(--color-primary)', 
               margin: '0 0 0.5rem 0', 
