@@ -228,11 +228,11 @@ const WritingRecords: React.FC = () => {
     const mood = moodText.toLowerCase().replace(/[^a-z]/g, '');
     switch (mood) {
       case 'excellent': return '#00cc66'; // Darker green
-      case 'good': return '#cc8c37'; // Darker orange 
+      case 'good': return '#3e1919ff'; // Darker orange 
       case 'okay': return '#ccaa00'; // Darker yellow
       case 'challenging': return '#cc6600'; // Darker orange-red
       case 'tough': return '#cc4444'; // Darker red
-      default: return '#cc8c37'; // Darker orange default
+      default: return '#105b46ff'; // Darker orange default
     }
   };
 
