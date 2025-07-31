@@ -49,7 +49,7 @@ const NavBar: React.FC = () => {
         })}
         <li>
           <Link to="/writing-records" className="navbar-link-writing-records">
-            Writing Records
+            Writing Records »
           </Link>
         </li>
       </ul>
