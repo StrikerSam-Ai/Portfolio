@@ -523,9 +523,12 @@ const WritingRecords: React.FC = () => {
         {/* Enhanced KPI Cards */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gridTemplateRows: 'repeat(2, 1fr)',
           gap: '1.5rem',
-          marginBottom: '3rem'
+          marginBottom: '3rem',
+          maxWidth: '800px',
+          margin: '0 auto 3rem auto'
         }}>
           {/* Smart Streak Card */}
           <div style={{
