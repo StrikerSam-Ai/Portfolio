@@ -10,6 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <!-- Netlify form definition (hidden) so dynamic React form is captured -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name">
+      <input type="email" name="email">
+      <textarea name="message"></textarea>
+      <input type="hidden" name="form-name" value="contact">
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
