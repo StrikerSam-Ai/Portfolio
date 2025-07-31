@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin, faXTwitter, faMedium } from '@fortawesome/free-brands-svg-icons';
 import { faCheckCircle, faExclamationCircle, faEnvelope, faMapMarkerAlt, faClock } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
 
 interface FormData {
   name: string;
@@ -18,7 +17,6 @@ const ContactSection: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -28,24 +26,28 @@ const ContactSection: React.FC = () => {
     }));
   };
 
+  // helper to URL-encode form data
+  const encode = (data: Record<string, string>) =>
+    Object.keys(data)
+      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&");
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
-
-    // Simulate form submission
+    
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Here you would typically send the data to your backend
-      console.log('Form submitted:', formData);
-      
+      // POST form data to Netlify without redirect
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode({ 'form-name': 'contact', ...formData })
+      });
       setSubmitStatus('success');
       setFormData({ name: '', email: '', message: '' });
-      
-      // Reset success message after 3 seconds
+      // Clear status after delay
       setTimeout(() => setSubmitStatus('idle'), 3000);
-      navigate('/thank-you'); // Navigate to a thank you page or similar
     } catch (error) {
       setSubmitStatus('error');
       setTimeout(() => setSubmitStatus('idle'), 3000);
