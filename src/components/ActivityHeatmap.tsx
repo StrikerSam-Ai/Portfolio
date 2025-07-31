@@ -38,7 +38,7 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
     const result = [];
     const today = new Date();
     
-    // Start from 365 days ago and go forward to today
+    // Start from 365 days ago and go forward to the end of current month
     const startDate = new Date(today);
     startDate.setDate(startDate.getDate() - 364);
     
@@ -46,8 +46,14 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
     const startOfWeek = new Date(startDate);
     startOfWeek.setDate(startDate.getDate() - startDate.getDay());
     
-    // Generate enough days to fill complete weeks (53 weeks * 7 days = 371 days)
-    for (let i = 0; i < 371; i++) {
+    // Calculate end date to include the full current month + a few more weeks
+    const endDate = new Date(today.getFullYear(), today.getMonth() + 2, 0); // End of next month
+    const totalDays = Math.ceil((endDate.getTime() - startOfWeek.getTime()) / (1000 * 60 * 60 * 24)) + 7; // Add extra week
+    
+    console.log(`Generating data from ${startOfWeek.toISOString().split('T')[0]} to ${endDate.toISOString().split('T')[0]} (${totalDays} days)`);
+    
+    // Generate days to cover the full range
+    for (let i = 0; i < totalDays; i++) {
       const date = new Date(startOfWeek);
       date.setDate(startOfWeek.getDate() + i);
       const dateStr = date.toISOString().split('T')[0];
@@ -60,7 +66,7 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
         mood: 'neutral'
       };
       
-      // Skip dates that are in the future
+      // Skip dates that are in the future beyond today
       if (date > today) {
         dayData.score = 0; // Ensure future dates show as empty
       }
@@ -80,6 +86,7 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
     console.log('Sample data:', data.slice(0, 3));
     console.log('Generated year data with scores > 0:', result.filter(d => d.score > 0).length);
     console.log('Sample generated data with scores:', result.filter(d => d.score > 0).slice(0, 3));
+    console.log(`Date range: ${result[0]?.actualDate?.toISOString().split('T')[0]} to ${result[result.length-1]?.actualDate?.toISOString().split('T')[0]}`);
     
     return result;
   };
@@ -104,22 +111,30 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
       
       if (middleDay && middleDay.actualDate) {
         const month = middleDay.actualDate.getMonth();
+        const monthName = monthLabels[month];
+        const year = middleDay.actualDate.getFullYear();
+        
         if (month !== currentMonth) {
-          // Only add if there's enough space from the previous label (reduced to 3 weeks)
+          console.log(`Found month change: ${monthName} ${year} at week ${weekIndex}, date: ${middleDay.actualDate.toISOString().split('T')[0]}`);
+          
+          // Skip July 2024 (leftmost July)
+          if (monthName === 'Jul' && year === 2024) {
+            currentMonth = month;
+            weekIndex++;
+            continue;
+          }
+          
+          // Add month with proper spacing
           const lastLabel = labels[labels.length - 1];
-          if (!lastLabel || weekIndex - lastLabel.weekIndex >= 3) { // Minimum 3 weeks spacing
+          const canAdd = !lastLabel || weekIndex - lastLabel.weekIndex >= 4;
+          
+          if (canAdd) {
+            // Position the label at the actual start of the month's weeks
             labels.push({
-              month: monthLabels[month],
+              month: monthName,
               weekIndex: weekIndex
             });
-          } else {
-            // If we can't fit this month, replace the last one if this is more recent
-            if (lastLabel && weekIndex - lastLabel.weekIndex >= 2) {
-              labels[labels.length - 1] = {
-                month: monthLabels[month],
-                weekIndex: weekIndex
-              };
-            }
+            console.log(`Added ${monthName} ${year} at week ${weekIndex}`);
           }
           currentMonth = month;
         }
@@ -127,6 +142,7 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
       weekIndex++;
     }
     
+    console.log('Final month labels:', labels);
     return labels;
   };
   
