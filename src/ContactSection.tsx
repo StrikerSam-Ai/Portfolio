@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin, faXTwitter, faMedium } from '@fortawesome/free-brands-svg-icons';
 import { faCheckCircle, faExclamationCircle, faEnvelope, faMapMarkerAlt, faClock } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 interface FormData {
   name: string;
@@ -17,6 +18,7 @@ const ContactSection: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -43,6 +45,7 @@ const ContactSection: React.FC = () => {
       
       // Reset success message after 3 seconds
       setTimeout(() => setSubmitStatus('idle'), 3000);
+      navigate('/thank-you'); // Navigate to a thank you page or similar
     } catch (error) {
       setSubmitStatus('error');
       setTimeout(() => setSubmitStatus('idle'), 3000);
@@ -61,7 +64,9 @@ const ContactSection: React.FC = () => {
     <section className="contact-section" id="contact">
       <h2 className="contact-title">Get In Touch</h2>
       <div className="contact-content">
-        <form className="contact-form" onSubmit={handleSubmit}>
+        <form name="contact" method="POST" data-netlify="true" className="contact-form" onSubmit={handleSubmit}>
+          {/* Netlify form handling */}
+          <input type="hidden" name="form-name" value="contact" />
           <h3>Send me a message</h3>
           <input 
             type="text" 
@@ -168,4 +173,4 @@ const ContactSection: React.FC = () => {
   );
 };
 
-export default ContactSection; 
+export default ContactSection;
