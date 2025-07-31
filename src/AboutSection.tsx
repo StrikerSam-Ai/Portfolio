@@ -21,22 +21,17 @@ ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, 
 type Skill = { label: string; value: number };
 
 const defaultSkills: Skill[] = [
-  { label: 'Python', value: 95 },
-  { label: 'Machine Learning', value: 90 },
-  { label: 'Deep Learning', value: 85 },
-  { label: 'NLP', value: 80 },
-  { label: 'Data Science', value: 88 },
-  { label: 'MLOps', value: 75 },
-  { label: 'Web Dev', value: 70 }
+  { label: 'Python', value: 80 },
+  { label: 'Machine Learning', value: 50 },
+  { label: 'Deep Learning', value: 40 },
+  { label: 'NLP', value: 20 },
+  { label: 'Data Science', value: 60 },
+  { label: 'MLOps', value: 50 },
+  { label: 'Web Dev', value: 80 }
 ];
 
-const getStoredSkills = (): Skill[] => {
-  try {
-    const stored = localStorage.getItem('skills');
-    if (stored) return JSON.parse(stored);
-  } catch {}
-  return defaultSkills;
-};
+// Always use default skills; disable localStorage persistence until explicit update
+const getStoredSkills = (): Skill[] => defaultSkills;
 
 // Dynamic content with timestamps for automatic sorting (same as WritingRecords)
 const blogPosts = [
@@ -135,9 +130,10 @@ const AboutSection: React.FC = () => {
     fetchProgress();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('skills', JSON.stringify(skills));
-  }, [skills]);
+  // Persisting skills automatically disabled; uncomment to re-enable storage on manual updates
+  // useEffect(() => {
+  //   localStorage.setItem('skills', JSON.stringify(skills));
+  // }, [skills]);
 
   // Heartbeat wave animation effect
   useEffect(() => {
