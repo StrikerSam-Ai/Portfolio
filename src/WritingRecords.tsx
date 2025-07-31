@@ -232,7 +232,7 @@ const WritingRecords: React.FC = () => {
       case 'okay': return '#ccaa00'; // Darker yellow
       case 'challenging': return '#cc6600'; // Darker orange-red
       case 'tough': return '#cc4444'; // Darker red
-      default: return '#105b46ff'; // Darker orange default
+      default: return '#ff9500ff'; // Darker orange default
     }
   };
 
@@ -737,7 +737,7 @@ const WritingRecords: React.FC = () => {
                 fontSize: '1.3rem',
                 fontFamily: 'monospace'
               }}>
-                <FontAwesomeIcon icon={faArrowTrendUp} style={{ marginRight: '0.5rem' }} /> Productivity Trend (14 Days)
+                <FontAwesomeIcon icon={faArrowTrendUp} style={{ marginRight: '0.5rem' }} /> Productivity Trend
               </h3>
               <div style={{ height: '280px', position: 'relative' }}>
                 <Line data={productivityTrendData} options={lineChartOptions} />
