@@ -102,45 +102,58 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
   // Generate dynamic month labels based on actual data
   const getMonthLabels = () => {
     const labels = [];
-    let currentMonth = -1;
+    const monthWeekRanges = new Map();
     let weekIndex = 0;
     
+    // First pass: find the week ranges for each month
     for (let i = 0; i < yearData.length; i += 7) {
       const weekData = yearData.slice(i, i + 7);
-      const middleDay = weekData[3] || weekData[0]; // Use Wednesday or first day of week
+      const middleDay = weekData[3] || weekData[0];
       
       if (middleDay && middleDay.actualDate) {
         const month = middleDay.actualDate.getMonth();
-        const monthName = monthLabels[month];
         const year = middleDay.actualDate.getFullYear();
+        const monthKey = `${year}-${month}`;
         
-        if (month !== currentMonth) {
-          console.log(`Found month change: ${monthName} ${year} at week ${weekIndex}, date: ${middleDay.actualDate.toISOString().split('T')[0]}`);
-          
-          // Skip July 2024 (leftmost July)
-          if (monthName === 'Jul' && year === 2024) {
-            currentMonth = month;
-            weekIndex++;
-            continue;
-          }
-          
-          // Add month with proper spacing
-          const lastLabel = labels[labels.length - 1];
-          const canAdd = !lastLabel || weekIndex - lastLabel.weekIndex >= 4;
-          
-          if (canAdd) {
-            // Position the label at the actual start of the month's weeks
-            labels.push({
-              month: monthName,
-              weekIndex: weekIndex
-            });
-            console.log(`Added ${monthName} ${year} at week ${weekIndex}`);
-          }
-          currentMonth = month;
+        if (!monthWeekRanges.has(monthKey)) {
+          monthWeekRanges.set(monthKey, { 
+            start: weekIndex, 
+            end: weekIndex, 
+            month: month, 
+            year: year,
+            name: monthLabels[month]
+          });
+        } else {
+          monthWeekRanges.get(monthKey).end = weekIndex;
         }
       }
       weekIndex++;
     }
+    
+    // Second pass: create labels positioned at the center of each month's range
+    for (const range of monthWeekRanges.values()) {
+      // Skip July 2024
+      if (range.name === 'Jul' && range.year === 2024) {
+        continue;
+      }
+      
+      // Position label at the center of the month's week range
+      const centerWeek = Math.floor((range.start + range.end) / 2);
+      
+      const lastLabel = labels[labels.length - 1];
+      const canAdd = !lastLabel || centerWeek - lastLabel.weekIndex >= 4;
+      
+      if (canAdd) {
+        labels.push({
+          month: range.name,
+          weekIndex: centerWeek
+        });
+        console.log(`Added ${range.name} ${range.year} at center week ${centerWeek} (range: ${range.start}-${range.end})`);
+      }
+    }
+    
+    // Sort by week index
+    labels.sort((a, b) => a.weekIndex - b.weekIndex);
     
     console.log('Final month labels:', labels);
     return labels;
