@@ -46,11 +46,13 @@ export const ActivityHeatmap: React.FC<ActivityHeatmapProps> = ({ data, onDateCl
     const startOfWeek = new Date(startDate);
     startOfWeek.setDate(startDate.getDate() - startDate.getDay());
     
-    // Calculate end date to include the full current month + a few more weeks
-    const endDate = new Date(today.getFullYear(), today.getMonth() + 2, 0); // End of next month
-    const totalDays = Math.ceil((endDate.getTime() - startOfWeek.getTime()) / (1000 * 60 * 60 * 24)) + 7; // Add extra week
+    // Calculate end date as end of the week containing today
+    const endOfWeek = new Date(today);
+    endOfWeek.setDate(today.getDate() + (6 - today.getDay()));
+    endOfWeek.setHours(0, 0, 0, 0);
+    const totalDays = Math.ceil((endOfWeek.getTime() - startOfWeek.getTime()) / (1000 * 60 * 60 * 24)) + 1;
     
-    console.log(`Generating data from ${startOfWeek.toISOString().split('T')[0]} to ${endDate.toISOString().split('T')[0]} (${totalDays} days)`);
+    console.log(`Generating data from ${startOfWeek.toISOString().split('T')[0]} to ${endOfWeek.toISOString().split('T')[0]} (${totalDays} days)`);
     
     // Generate days to cover the full range
     for (let i = 0; i < totalDays; i++) {
