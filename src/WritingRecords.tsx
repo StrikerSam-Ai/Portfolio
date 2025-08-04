@@ -118,46 +118,46 @@ const blogPosts = [
     publishedDate: new Date('2025-07-18'),
     category: 'Career'
   },
-  { 
-    title: "The Thought Process Behind My Learning Plan", 
-    url: "https://medium.com/@shashwat-mishra/the-thought-process-behind-my-learning-plan", 
-    snippet: "How I structure my learning for maximum growth.", 
-    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example3.png",
-    publishedDate: new Date('2025-07-15'),
-    category: 'Learning'
-  },
-  { 
-    title: "Math For Machine Learning [Resources]", 
-    url: "https://medium.com/@shashwat-mishra/math-for-machine-learning-resources", 
-    snippet: "Essential math resources for aspiring ML engineers.", 
-    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example4.png",
-    publishedDate: new Date('2025-07-10'),
-    category: 'Resources'
-  },
-  { 
-    title: "You Are NOT Dumb, You Just Lack the Prerequisites", 
-    url: "https://medium.com/@shashwat-mishra/you-are-not-dumb-you-just-lack-the-prerequisites", 
-    snippet: "Why background knowledge matters more than you think.", 
-    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example5.png",
-    publishedDate: new Date('2025-07-05'),
-    category: 'Learning'
-  },
-  { 
-    title: "Why I Started Documenting My Grind—and Why You Might Consider It Too", 
-    url: "https://medium.com/@shashwat-mishra/why-i-started-documenting-my-grind-and-why-you-might-consider-it-too", 
-    snippet: "The power of public learning and sharing your journey.", 
-    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example6.png",
-    publishedDate: new Date('2025-06-28'),
-    category: 'Personal'
-  },
-  { 
-    title: "From Marketing to Code: Why I Made the Switch", 
-    url: "https://medium.com/@shashwat-mishra/from-marketing-to-code-why-i-made-the-switch", 
-    snippet: "My journey from marketing to software engineering.", 
-    image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example7.png",
-    publishedDate: new Date('2025-06-20'),
-    category: 'Career'
-  },
+  // { 
+  //   title: "The Thought Process Behind My Learning Plan", 
+  //   url: "https://medium.com/@shashwat-mishra/the-thought-process-behind-my-learning-plan", 
+  //   snippet: "How I structure my learning for maximum growth.", 
+  //   image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example3.png",
+  //   publishedDate: new Date('2025-07-15'),
+  //   category: 'Learning'
+  // },
+  // { 
+  //   title: "Math For Machine Learning [Resources]", 
+  //   url: "https://medium.com/@shashwat-mishra/math-for-machine-learning-resources", 
+  //   snippet: "Essential math resources for aspiring ML engineers.", 
+  //   image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example4.png",
+  //   publishedDate: new Date('2025-07-10'),
+  //   category: 'Resources'
+  // },
+  // { 
+  //   title: "You Are NOT Dumb, You Just Lack the Prerequisites", 
+  //   url: "https://medium.com/@shashwat-mishra/you-are-not-dumb-you-just-lack-the-prerequisites", 
+  //   snippet: "Why background knowledge matters more than you think.", 
+  //   image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example5.png",
+  //   publishedDate: new Date('2025-07-05'),
+  //   category: 'Learning'
+  // },
+  // { 
+  //   title: "Why I Started Documenting My Grind—and Why You Might Consider It Too", 
+  //   url: "https://medium.com/@shashwat-mishra/why-i-started-documenting-my-grind-and-why-you-might-consider-it-too", 
+  //   snippet: "The power of public learning and sharing your journey.", 
+  //   image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example6.png",
+  //   publishedDate: new Date('2025-06-28'),
+  //   category: 'Personal'
+  // },
+  // { 
+  //   title: "From Marketing to Code: Why I Made the Switch", 
+  //   url: "https://medium.com/@shashwat-mishra/from-marketing-to-code-why-i-made-the-switch", 
+  //   snippet: "My journey from marketing to software engineering.", 
+  //   image: "https://miro.medium.com/v2/resize:fit:720/format:webp/1*example7.png",
+  //   publishedDate: new Date('2025-06-20'),
+  //   category: 'Career'
+  // },
 ].sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime()); // Sort by most recent
 
 const researchPublications = [
