@@ -35,7 +35,7 @@ const projects: Project[] = [
     id: 3,
     title: "TacTik",
     description: "Smart CLI-based study planner that prioritizes subjects with spaced repetition, dual input modes, scientific scoring, and animated colored output.",
-    tech: ["TypeScript", "Node.js", "CLI", "Spaced Repetition", "Cross-Platform"],
+    tech: ["C", "CLI", "Spaced Repetition", "Cross-Platform"],
     image: tactikLogo,
     github: "https://github.com/StrikerSam-Ai/TacTik"
   },
@@ -43,7 +43,7 @@ const projects: Project[] = [
     id: 4,
     title: "RILearn",
     description: "✨ Reinventing Learning through Interactive Learning ✨ RILearn is an innovative online application designed to transform the way we read e-books by making the process interactive, immersive, and engaging.",
-    tech: ["React", "TypeScript", "CSS Animations", "HTML5"],
+    tech: ["JavaScript","CSS Animations", "HTML5","PWA"],
     image: rilearnGif,
     github: "https://github.com/StrikerSam-Ai/RILearn"
   },
