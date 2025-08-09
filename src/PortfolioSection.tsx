@@ -2,6 +2,7 @@ import React from 'react';
 import logoSvg from './assets/logo.svg';
 import elderHubLogo from './assets/elderhub-logo.png';
 import tactikLogo from './assets/tactik-logo.png';
+import rilearnGif from './assets/rilearn-logo.gif';
 
 interface Project {
   id: number;
@@ -37,6 +38,14 @@ const projects: Project[] = [
     tech: ["TypeScript", "Node.js", "CLI", "Spaced Repetition", "Cross-Platform"],
     image: tactikLogo,
     github: "https://github.com/StrikerSam-Ai/TacTik"
+  },
+  {
+    id: 4,
+    title: "RILearn",
+    description: "✨ Reinventing Learning through Interactive Learning ✨ RILearn is an innovative online application designed to transform the way we read e-books by making the process interactive, immersive, and engaging.",
+    tech: ["React", "TypeScript", "CSS Animations", "HTML5"],
+    image: rilearnGif,
+    github: "https://github.com/StrikerSam-Ai/RILearn"
   },
 ];
 
