@@ -20,7 +20,6 @@ const projects: Project[] = [
     description: "Dynamic portfolio website with integrated progress tracking system, activity heatmap visualization, and comprehensive analytics dashboard. Features real-time content management and interactive data visualization.",
     tech: ["React", "TypeScript", "Chart.js", "Vite", "CSS3"],
     image: logoSvg,
-    liveDemo: "https://shashwat-portfolio.vercel.app",
     github: "https://github.com/StrikerSam-Ai/Portfolio"
   },
   {
