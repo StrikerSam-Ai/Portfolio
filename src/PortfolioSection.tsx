@@ -42,7 +42,7 @@ const projects: Project[] = [
   {
     id: 4,
     title: "RILearn",
-    description: "✨ Reinventing Learning through Interactive Learning ✨ RILearn is an innovative online application designed to transform the way we read e-books by making the process interactive, immersive, and engaging.",
+    description: "✨ Reinventing Learning through Interactive Learning ✨<\br> RILearn is an innovative online application designed to transform the way we read e-books by making the process interactive, immersive, and engaging.",
     tech: ["JavaScript","CSS Animations", "HTML5","PWA"],
     image: rilearnGif,
     github: "https://github.com/StrikerSam-Ai/RILearn"
@@ -64,7 +64,12 @@ const PortfolioSection: React.FC = () => {
               )}
             </div>
             <h3 className="portfolio-project-title">{project.title}</h3>
-            <p className="portfolio-description">{project.description}</p>
+            <p
+              className="portfolio-description"
+              style={project.id === 3 ? { marginBottom: '1.5rem' } : undefined}
+            >
+              {project.description}
+            </p>
             <div className="portfolio-tech">
               {project.tech.map((tech, index) => (
                 <span key={index} className="tech-tag">{tech}</span>
