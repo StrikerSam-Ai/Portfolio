@@ -1,6 +1,7 @@
 import React from 'react';
 import logoSvg from './assets/logo.svg';
 import elderHubLogo from './assets/elderhub-logo.png';
+import tactikLogo from './assets/tactik-logo.png';
 
 interface Project {
   id: number;
@@ -29,6 +30,14 @@ const projects: Project[] = [
     tech: ["React", "Node.js", "MongoDB", "Express", "Healthcare APIs","Groq AI"],
     image: elderHubLogo,
     github: "https://github.com/StrikerSam-Ai/Team-Elevate-HH2025"
+  },
+  {
+    id: 3,
+    title: "TacTik",
+    description: "Interactive Tic-Tac-Toe game built with React and TypeScript.",
+    tech: ["React", "TypeScript"],
+    image: tactikLogo,
+    github: "https://github.com/StrikerSam-Ai/TacTik"
   },
 ];
 
@@ -72,4 +81,4 @@ const PortfolioSection: React.FC = () => {
   );
 };
 
-export default PortfolioSection; 
+export default PortfolioSection;
