@@ -34,7 +34,7 @@ const projects: Project[] = [
   {
     id: 3,
     title: "TacTik",
-    description: "Interactive Tic-Tac-Toe game built with React and TypeScript.",
+    description: "Smart CLI-based study planner that prioritizes subjects with spaced repetition, dual input modes, scientific scoring, and animated colored output.",
     tech: ["React", "TypeScript"],
     image: tactikLogo,
     github: "https://github.com/StrikerSam-Ai/TacTik"
