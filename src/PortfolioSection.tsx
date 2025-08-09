@@ -42,7 +42,7 @@ const projects: Project[] = [
   {
     id: 4,
     title: "RILearn",
-    description: "✨ Reinventing Learning through Interactive Learning ✨<\br> RILearn is an innovative online application designed to transform the way we read e-books by making the process interactive, immersive, and engaging.",
+    description: "✨ Reinventing Learning through Interactive Learning ✨                   RILearn is an innovative online application designed to transform the way we read e-books by making the process interactive, immersive, and engaging.",
     tech: ["JavaScript","CSS Animations", "HTML5","PWA"],
     image: rilearnGif,
     github: "https://github.com/StrikerSam-Ai/RILearn"
