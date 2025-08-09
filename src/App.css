@@ -411,6 +411,7 @@ html, body, #root {
 
 .portfolio-description, .about-bio, .about-skills, .about-timeline, .about-education {
   color: #e0e6f7;
+  margin-bottom: 1rem;
 }
 
 .timeline-detail {
