@@ -34,7 +34,7 @@ const projects: Project[] = [
     id: 3,
     title: "TacTik",
     description: "Smart CLI-based study planner that prioritizes subjects with spaced repetition, dual input modes, scientific scoring, and animated colored output.",
-    tech: ["React", "TypeScript"],
+    tech: ["TypeScript", "Node.js", "CLI", "Spaced Repetition", "Cross-Platform"],
     image: tactikLogo,
     github: "https://github.com/StrikerSam-Ai/TacTik"
   },
