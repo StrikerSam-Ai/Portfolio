@@ -749,6 +749,7 @@ html, body, #root {
   width: 100%;
   max-width: 90vw;
   max-height: 90vh;
+  height: 90vh; /* Ensure a definite height so the iframe can be 100% */
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 32px rgba(0,0,0,0.5);
@@ -821,6 +822,9 @@ html, body, #root {
 
 .pdf-modal-content iframe {
   border-radius: 0 0 1.2rem 1.2rem;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 /* Responsive Design for Certifications */
@@ -833,6 +837,7 @@ html, body, #root {
   .pdf-modal {
     max-width: 95vw;
     max-height: 95vh;
+    height: 95vh;
   }
   
   .pdf-modal-header {
