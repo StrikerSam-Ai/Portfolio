@@ -4,6 +4,7 @@ import AboutSection from './AboutSection'
 import PortfolioSection from './PortfolioSection'
 import ServicesSection from './ServicesSection'
 import ContactSection from './ContactSection'
+import CertificationsSection from './CertificationsSection'
 import ScrollToTopButton from './ScrollToTopButton'
 import Footer from './Footer'
 import { useState, useEffect } from 'react'
@@ -79,6 +80,7 @@ function App() {
             <AboutSection />
             <PortfolioSection />
             <ServicesSection />
+            <CertificationsSection />
             <ContactSection />
             <ScrollToTopButton />
             <Footer />
